@@ -1,4 +1,5 @@
 /node_modules/
+/twentytwentyone/
 /.git/
 /**/Thumbs.db
 /**/*.DS_Store
