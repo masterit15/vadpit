@@ -1,0 +1,45 @@
+@import config
+@import 'blocks/**/*'
+
+body
+  background-color: #E5E5E5
+  color: #000000
+.wrapper
+  // padding: 100px
+  width: 100%
+  height: 100%
+section
+  &.section
+    &_offer
+      position: relative
+      display: flex
+      flex-direction: column
+      justify-content: space-between
+      width: 100%
+      height: 100vh
+      background-attachment: scroll
+      background-position: 50% 50%
+      background-repeat: no-repeat
+      background-size: cover
+    &_news
+      padding: 50px 100px
+      display: flex
+      justify-content: space-between
+      // gap: 147px
+    &_our_pets
+      padding: 50px 100px
+.section_sub_title
+  margin-bottom: 58px
+  font-size: 36px
+  line-height: 47px
+.contact
+  &_list
+    display: flex
+    justify-content: center
+    flex-direction: column
+    font-size: 14px
+    list-style: none
+@import 'header'
+@import 'navigation'
+@import 'offer'
+@import 'news'
