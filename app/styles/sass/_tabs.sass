@@ -1,2 +1,28 @@
 .tabs
   &_action
+    width: 100%
+    display: flex
+    justify-content: center
+    &_btn
+      cursor: pointer
+      background-color: transparent
+      border: none
+      font-size: 24px
+      text-align: center
+      width: 177px
+      height: 55px
+      transition: all .3s ease
+      &.active
+        background-color: #000
+        color: #fff
+        transition: all .3s ease
+  &_content
+    display: none
+    width: 100%
+    height: auto
+    margin-top: 56px
+    transition: all .3s ease
+    &.active
+      display: block
+      transition: all .3s ease
+

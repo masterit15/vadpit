@@ -7,6 +7,13 @@ window.$ = $
 document.addEventListener('DOMContentLoaded', () => {
 	const tl = gsap.timeline()
 
+	// табы
+	$('.tabs_action_btn').on('click', function(){
+		$('.tabs_action_btn').removeClass('active')
+		$('.tabs_content').removeClass('active')
+		let index = $(this).addClass('active').data('item')
+		$('.tabs_content[data-content="' + index + '"]').addClass('active')
+	})
 	// анимируем цифры
 	const numberBlock = document.querySelector(".count");
 	var scores = [];

@@ -106,8 +106,24 @@
 	<h2 class="section_sub_title">Наши питомцы</h2>
 	<div class="tabs">
 		<div class="tabs_action">
-			<button class="tabs_action_btn active"><i class="fas fa-dog"></i> Собаки</button>
-			<button class="tabs_action_btn active">Кошки <i class="fas fa-cat"></i></button>
+			<button class="tabs_action_btn active" data-item="1"><i class="fas fa-dog"></i> Собаки</button>
+			<button class="tabs_action_btn" data-item="2">Кошки <i class="fas fa-cat"></i></button>
+		</div>
+		<div class="tabs_content active" data-content="1">
+			<div class="card_list">
+				<div class="card_item" style="background-image: url('./images/dist/photo-baton.png');">
+					<div class="card_item_content">
+						<div class="card_item_title">Батон</div>
+						<div class="card_item_address"><i class="fal fa-map-pin"></i> пос. Заводской ул. Дзусова</div>
+						<div class="card_item_date"><i class="fal fa-clock"></i> 21.02.2021</div>
+						<div class="card_item_desc">Мальчик, 4 месяца. Вылечен.</div>
+					</div>
+					<a class="card_item_btn"><i class="fas fa-paw-alt"></i> Забрать</a>
+				</div>
+			</div>
+		</div>
+		<div class="tabs_content" data-content="2">
+			Кошек нет!
 		</div>
 	</div>
 </section>
