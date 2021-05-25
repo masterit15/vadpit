@@ -1,132 +1,205 @@
 <!--#set var="title" value="OptimizedHTML 5" -->
 <!--#include virtual="/parts/header.html" -->
-<div class="wrapper"><!-- begin wrapper -->
+<div class="wrapper">
+	<!-- begin wrapper -->
 	<section class="section_offer" style="background-image: url(./images/src/bg-offer.jpg);">
 		<header class="header">
 			<a href="/" class="logo">
 				<img src="./images/dist/logo.png" alt="">
 				ВМКУ "Владпитомник"
 			</a>
-			<nav class="top_nav">
-				<ul>
-					<li><a href="#">Главная</a></li>
-					<li><a href="#">Наши питомцы</a></li>
-					<li><a href="#">Стать волонтером</a></li>
-					<li><a href="#">Контакты</a></li>                        
+			<div id="mobnav">
+				<span></span>
+			</div>
+			<div class="nav_wrap">
+				<nav class="top_nav">
+					<ul>
+						<li><a href="#">Главная</a></li>
+						<li><a href="#">Наши питомцы</a></li>
+						<li><a href="#">Стать волонтером</a></li>
+						<li><a href="#">Контакты</a></li>
+					</ul>
+				</nav>
+				<ul class="contact_list">
+					<li><a href="#"><i class="far fa-phone"></i> +7(918) 833-55-16 </a></li>
+					<li><a href="#"><i class="far fa-map-marker-alt"></i> п. Заводской, ул. Пролетарская, 3</a></li>
 				</ul>
-			</nav>
-			<ul class="contact_list">
-				<li><a href="#"><i class="far fa-phone"></i> +7(918) 833-55-16 </a></li>
-				<li><a href="#"><i class="far fa-map-marker-alt"></i> п. Заводской, ул. Пролетарская, 3</a></li>
-			</ul>
+			</div>
 		</header>
 		<div class="offer_text">
 			<h1>Служба помощи, заботы и приюта для животных</h1>
-			<p>В муниципальном приюте содержатся более 150 добрых, ласковых, преданных и всегда веселых потенциальных друзей</p>
-			<a href="#" class="btn">Найти друга</a>
+			<p>В муниципальном приюте содержатся более 150 добрых, ласковых, преданных и всегда веселых потенциальных друзей
+			</p>
+			<a href="#our_pets" class="btn section_nav_link">Найти друга</a>
 		</div>
 		<ul class="offer_soc">
 			<li><a href="#" target="_blank"><i class="fab fa-instagram"></i></a></li>
 			<li><a href="#" target="_blank"><i class="fab fa-facebook-square"></i></a></li>
 		</ul>
-</section>
-<section class="section_news">
-	<div class="news">
-		<h2 class="section_sub_title">Последние новости</h2>
-		<div class="news_list">
-			<div class="news_item">
-				<div class="news_item_media" style="background-image: url('./images/dist/cock.jpg');">
-					<span class="news_item_view_count"><i class="far fa-eye"></i> 789</span>
-				</div>
-				<div class="news_item_date">25.04.2021</div>
-				<div class="news_item_title">Произошел отлов собак в п. Заводской</div>
-			</div>
-			<div class="news_item">
-				<div class="news_item_media" style="background-image: url('./images/dist/cock2.jpg');">
-					<span class="news_item_view_count"><i class="far fa-eye"></i> 789</span>
-				</div>
-				<div class="news_item_date">25.04.2021</div>
-				<div class="news_item_title">Произошел отлов собак в п. Заводской</div>
-			</div>
-			<div class="news_item">
-				<div class="news_item_media" style="background-image: url('./images/dist/cock3.jpg');">
-					<span class="news_item_view_count"><i class="far fa-eye"></i> 789</span>
-				</div>
-				<div class="news_item_date">25.04.2021</div>
-				<div class="news_item_title">Произошел отлов собак в п. Заводской</div>
-			</div>
-			<div class="news_item">
-				<div class="news_item_media" style="background-image: url('./images/dist/cock3.jpg');">
-					<span class="news_item_view_count"><i class="far fa-eye"></i> 789</span>
-				</div>
-				<div class="news_item_date">25.04.2021</div>
-				<div class="news_item_title">Произошел отлов собак в п. Заводской</div>
-			</div>
-			<div class="news_item">
-				<div class="news_item_media" style="background-image: url('./images/dist/cock2.jpg');">
-					<span class="news_item_view_count"><i class="far fa-eye"></i> 789</span>
-				</div>
-				<div class="news_item_date">25.04.2021</div>
-				<div class="news_item_title">Произошел отлов собак в п. Заводской</div>
-			</div>
-			<div class="news_item">
-				<div class="news_item_media" style="background-image: url('./images/dist/cock.jpg');">
-					<span class="news_item_view_count"><i class="far fa-eye"></i> 789</span>
-				</div>
-				<div class="news_item_date">25.04.2021</div>
-				<div class="news_item_title">Произошел отлов собак в п. Заводской</div>
-			</div>
-		</div>
-		<button class="news_all_btn">Смотреть все</button>
-	</div>
-	<div class="count">
-		<h2 class="section_sub_title">Муниципальный приют в цифрах</h2>
-		<div class="count_list">
-			<div class="count_item" data-target="0" data-start="0" data-end="150">
-				<div class="count_item_num" >0</div>
-				<div class="count_item_title">Столько питомцев ждут своих хозяев</div>
-			</div>
-			<div class="count_item" data-target="1" data-start="0" data-end="999">
-				<div class="count_item_num" >0</div>
-				<div class="count_item_title">Питомцев обрели новый дом и семью</div>
-			</div>
-			<div class="count_item"  data-target="2" data-start="0" data-end="30">
-				<div class="count_item_num">0</div>
-				<div class="count_item_title">Волонтеров оказывают помощь</div>
-			</div>
-			<div class="count_item" data-target="3" data-start="0" data-end="541">
-				<div class="count_item_num" >0</div>
-				<div class="count_item_title">Питомцев было вылечено</div>
-			</div>
-		</div>
-	</div>
-</section>
-
-<section class="section_our_pets">
-	<h2 class="section_sub_title">Наши питомцы</h2>
-	<div class="tabs">
-		<div class="tabs_action">
-			<button class="tabs_action_btn active" data-item="1"><i class="fas fa-dog"></i> Собаки</button>
-			<button class="tabs_action_btn" data-item="2">Кошки <i class="fas fa-cat"></i></button>
-		</div>
-		<div class="tabs_content active" data-content="1">
-			<div class="card_list">
-				<div class="card_item" style="background-image: url('./images/dist/photo-baton.png');">
-					<div class="card_item_content">
-						<div class="card_item_title">Батон</div>
-						<div class="card_item_address"><i class="fal fa-map-pin"></i> пос. Заводской ул. Дзусова</div>
-						<div class="card_item_date"><i class="fal fa-clock"></i> 21.02.2021</div>
-						<div class="card_item_desc">Мальчик, 4 месяца. Вылечен.</div>
+	</section>
+	<section class="section_news">
+		<div class="news">
+			<h2 class="section_sub_title">Последние новости</h2>
+			<div class="news_list">
+				<div class="news_item">
+					<div class="news_item_media" style="background-image: url('./images/dist/pexels-dog2.jpg');">
+						<span class="news_item_view_count"><i class="far fa-eye"></i> 789</span>
 					</div>
-					<a class="card_item_btn"><i class="fas fa-paw-alt"></i> Забрать</a>
+					<div class="news_item_date">25.04.2021</div>
+					<div class="news_item_title">Произошел отлов собак в п. Заводской</div>
+				</div>
+				<div class="news_item">
+					<div class="news_item_media" style="background-image: url('./images/dist/pexels-dog3.jpg');">
+						<span class="news_item_view_count"><i class="far fa-eye"></i> 789</span>
+					</div>
+					<div class="news_item_date">25.04.2021</div>
+					<div class="news_item_title">Произошел отлов собак в п. Заводской</div>
+				</div>
+				<div class="news_item">
+					<div class="news_item_media" style="background-image: url('./images/dist/cat4.jpg');">
+						<span class="news_item_view_count"><i class="far fa-eye"></i> 789</span>
+					</div>
+					<div class="news_item_date">25.04.2021</div>
+					<div class="news_item_title">Произошел отлов собак в п. Заводской</div>
+				</div>
+				<div class="news_item">
+					<div class="news_item_media" style="background-image: url('./images/dist/pexels-dog4.jpg');">
+						<span class="news_item_view_count"><i class="far fa-eye"></i> 789</span>
+					</div>
+					<div class="news_item_date">25.04.2021</div>
+					<div class="news_item_title">Произошел отлов собак в п. Заводской</div>
+				</div>
+				<div class="news_item">
+					<div class="news_item_media" style="background-image: url('./images/dist/cat3.jpg');">
+						<span class="news_item_view_count"><i class="far fa-eye"></i> 789</span>
+					</div>
+					<div class="news_item_date">25.04.2021</div>
+					<div class="news_item_title">Произошел отлов собак в п. Заводской</div>
+				</div>
+				<div class="news_item">
+					<div class="news_item_media" style="background-image: url('./images/dist/photo-baton.png');">
+						<span class="news_item_view_count"><i class="far fa-eye"></i> 789</span>
+					</div>
+					<div class="news_item_date">25.04.2021</div>
+					<div class="news_item_title">Произошел отлов собак в п. Заводской</div>
+				</div>
+			</div>
+			<button class="news_all_btn">Смотреть все</button>
+		</div>
+		<div class="count">
+			<h2 class="section_sub_title">Муниципальный приют в цифрах</h2>
+			<div class="count_list">
+				<div class="count_item" data-target="0" data-start="0" data-end="150">
+					<div class="count_item_num">0</div>
+					<div class="count_item_title">Столько питомцев ждут своих хозяев</div>
+				</div>
+				<div class="count_item" data-target="1" data-start="0" data-end="999">
+					<div class="count_item_num">0</div>
+					<div class="count_item_title">Питомцев обрели новый дом и семью</div>
+				</div>
+				<div class="count_item" data-target="2" data-start="0" data-end="30">
+					<div class="count_item_num">0</div>
+					<div class="count_item_title">Волонтеров оказывают помощь</div>
+				</div>
+				<div class="count_item" data-target="3" data-start="0" data-end="541">
+					<div class="count_item_num">0</div>
+					<div class="count_item_title">Питомцев было вылечено</div>
 				</div>
 			</div>
 		</div>
-		<div class="tabs_content" data-content="2">
-			Кошек нет!
+	</section>
+
+	<section class="section_our_pets" id="our_pets">
+		<h2 class="section_sub_title">Наши питомцы</h2>
+		<div class="tabs">
+			<div class="tabs_action">
+				<button class="tabs_action_btn active" data-item="1"><i class="fas fa-dog"></i> Собаки</button>
+				<button class="tabs_action_btn" data-item="2">Кошки <i class="fas fa-cat"></i></button>
+			</div>
+			<div class="tabs_wrap">
+				<div class="tabs_content active" data-content="1">
+					<div class="card_list">
+						<div class="card_item" style="background-image: url('./images/dist/pexels-dog1.jpg');">
+							<div class="card_item_content">
+								<div class="card_item_title">Батон</div>
+								<div class="card_item_address"><i class="fal fa-map-pin"></i> пос. Заводской ул. Дзусова</div>
+								<div class="card_item_date"><i class="fal fa-clock"></i> 21.02.2021</div>
+								<div class="card_item_desc">Мальчик, 4 месяца. Вылечен.</div>
+							</div>
+							<a class="card_item_btn"><i class="fas fa-paw-alt"></i> Забрать</a>
+						</div>
+						<div class="card_item" style="background-image: url('./images/dist/pexels-dog2.jpg');">
+							<div class="card_item_content">
+								<div class="card_item_title">Батон</div>
+								<div class="card_item_address"><i class="fal fa-map-pin"></i> пос. Заводской ул. Дзусова</div>
+								<div class="card_item_date"><i class="fal fa-clock"></i> 21.02.2021</div>
+								<div class="card_item_desc">Мальчик, 4 месяца. Вылечен.</div>
+							</div>
+							<a class="card_item_btn"><i class="fas fa-paw-alt"></i> Забрать</a>
+						</div>
+						<div class="card_item" style="background-image: url('./images/dist/pexels-dog3.jpg');">
+							<div class="card_item_content">
+								<div class="card_item_title">Батон</div>
+								<div class="card_item_address"><i class="fal fa-map-pin"></i> пос. Заводской ул. Дзусова</div>
+								<div class="card_item_date"><i class="fal fa-clock"></i> 21.02.2021</div>
+								<div class="card_item_desc">Мальчик, 4 месяца. Вылечен.</div>
+							</div>
+							<a class="card_item_btn"><i class="fas fa-paw-alt"></i> Забрать</a>
+						</div>
+						<div class="card_item" style="background-image: url('./images/dist/pexels-dog4.jpg');">
+							<div class="card_item_content">
+								<div class="card_item_title">Батон</div>
+								<div class="card_item_address"><i class="fal fa-map-pin"></i> пос. Заводской ул. Дзусова</div>
+								<div class="card_item_date"><i class="fal fa-clock"></i> 21.02.2021</div>
+								<div class="card_item_desc">Мальчик, 4 месяца. Вылечен.</div>
+							</div>
+							<a class="card_item_btn"><i class="fas fa-paw-alt"></i> Забрать</a>
+						</div>
+					</div>
+				</div>
+				<div class="tabs_content" data-content="2">
+					<div class="card_list">
+						<div class="card_item" style="background-image: url('./images/dist/cat1.jpg');">
+							<div class="card_item_content">
+								<div class="card_item_title">Батон</div>
+								<div class="card_item_address"><i class="fal fa-map-pin"></i> пос. Заводской ул. Дзусова</div>
+								<div class="card_item_date"><i class="fal fa-clock"></i> 21.02.2021</div>
+								<div class="card_item_desc">Мальчик, 4 месяца. Вылечен.</div>
+							</div>
+							<a class="card_item_btn"><i class="fas fa-paw-alt"></i> Забрать</a>
+						</div>
+						<div class="card_item" style="background-image: url('./images/dist/cat2.jpg');">
+							<div class="card_item_content">
+								<div class="card_item_title">Батон</div>
+								<div class="card_item_address"><i class="fal fa-map-pin"></i> пос. Заводской ул. Дзусова</div>
+								<div class="card_item_date"><i class="fal fa-clock"></i> 21.02.2021</div>
+								<div class="card_item_desc">Мальчик, 4 месяца. Вылечен.</div>
+							</div>
+							<a class="card_item_btn"><i class="fas fa-paw-alt"></i> Забрать</a>
+						</div>
+						<div class="card_item" style="background-image: url('./images/dist/cat3.jpg');">
+							<div class="card_item_content">
+								<div class="card_item_title">Батон</div>
+								<div class="card_item_address"><i class="fal fa-map-pin"></i> пос. Заводской ул. Дзусова</div>
+								<div class="card_item_date"><i class="fal fa-clock"></i> 21.02.2021</div>
+								<div class="card_item_desc">Мальчик, 4 месяца. Вылечен.</div>
+							</div>
+							<a class="card_item_btn"><i class="fas fa-paw-alt"></i> Забрать</a>
+						</div>
+						<div class="card_item" style="background-image: url('./images/dist/cat4.jpg');">
+							<div class="card_item_content">
+								<div class="card_item_title">Батон</div>
+								<div class="card_item_address"><i class="fal fa-map-pin"></i> пос. Заводской ул. Дзусова</div>
+								<div class="card_item_date"><i class="fal fa-clock"></i> 21.02.2021</div>
+								<div class="card_item_desc">Мальчик, 4 месяца. Вылечен.</div>
+							</div>
+							<a class="card_item_btn"><i class="far fa-paw-alt"></i> Забрать</a>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
-	</div>
-</section>
+	</section>
 </div><!-- end wrapper -->
 
 <!--#include virtual="/parts/footer.html" -->

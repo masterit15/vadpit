@@ -7,12 +7,33 @@ window.$ = $
 document.addEventListener('DOMContentLoaded', () => {
 	const tl = gsap.timeline()
 
+	$('#mobnav').on('click', function(){
+		$(this).toggleClass('active')
+		if($(this).hasClass('active')){
+			$('.header').addClass('full')
+			setTimeout(()=>{
+				$('.nav_wrap').slideDown(200)
+			}, 100)
+		}else{
+			$('.nav_wrap').slideUp(200)
+			// setTimeout(()=>{
+			// 	$('.header').removeClass('full')
+			// }, 100)
+		}
+	})
+	$('.section_nav_link').on('click', function(){
+		let elId = $(this).attr('href')
+		$('html, body').animate({
+				scrollTop: $(elId).offset().top
+		}, 800);
+	})
 	// табы
 	$('.tabs_action_btn').on('click', function(){
 		$('.tabs_action_btn').removeClass('active')
 		$('.tabs_content').removeClass('active')
 		let index = $(this).addClass('active').data('item')
-		$('.tabs_content[data-content="' + index + '"]').addClass('active')
+		$('.tabs_content').fadeOut(200)
+		$('.tabs_content[data-content="' + index + '"]').addClass('active').fadeIn(200)
 	})
 	// анимируем цифры
 	const numberBlock = document.querySelector(".count");

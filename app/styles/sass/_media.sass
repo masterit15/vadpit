@@ -1,0 +1,98 @@
+
+
+/*==========  Desktop First Method  ==========*/
+
+/* Большие Устройства, Широкие Экраны */
+@media only screen and (max-width : 1200px)
+	/**/
+	.section_news
+		flex-direction: column
+/* Средние устройства, Настольные компьютеры */
+@media only screen and (max-width : 992px)
+	/**/
+	.section_offer
+		.offer_text, .offer_soc
+			margin: 0
+	.card_list
+		overflow-x: scroll
+	.count_list
+		flex-direction: column
+		justify-content: center
+		&::before,&::after
+			display: none
+/* Небольшие устройства, Планшеты */
+@media only screen and (max-width : 768px)
+	/*Disable Animation on Mobile Devices*/
+	.animated
+		/*CSS transitions*/
+		-o-transition-property: none !important
+		-moz-transition-property: none !important
+		-ms-transition-property: none !important
+		-webkit-transition-property: none !important
+		transition-property: none !important
+		/*CSS transforms*/
+		-o-transform: none !important
+		-moz-transform: none !important
+		-ms-transform: none !important
+		-webkit-transform: none !important
+		transform: none !important
+		/*CSS animations*/
+		-webkit-animation: none !important
+		-moz-animation: none !important
+		-o-animation: none !important
+		-ms-animation: none !important
+		animation: none !important
+	
+	#mobnav
+		display: flex
+	.header
+		padding: 0 20px
+		.top_nav
+			ul
+				flex-direction: column
+				li
+					a
+						line-height: 40px
+	.nav_wrap
+		display: none
+		width: 100%
+		flex-direction: column
+		margin-bottom: 20px
+		// height: 0
+		// overflow: hidden
+	
+
+/* Сверхмалые Устройства, Телефоны */
+@media only screen and (max-width : 480px)
+	/**/
+
+/* Пользовательские, iPhone Retina */
+@media only screen and (max-width : 320px)
+	/**/
+
+
+/*==========  Mobile First Method  ==========*/
+
+/* Пользовательские, iPhone Retina */
+@media only screen and (min-width : 320px)
+	/**/
+
+
+/* Сверхмалые Устройства, Телефоны */
+@media only screen and (min-width : 480px)
+	/**/
+
+
+/* Небольшие устройства, Планшеты */
+@media only screen and (min-width: 768px)
+	/**/
+
+
+/* Средние устройства, Настольные компьютеры */
+@media only screen and (min-width : 992px)
+	/**/
+
+
+/* Большие Устройства, Широкие Экраны */
+@media only screen and (min-width : 1200px)
+	/**/
