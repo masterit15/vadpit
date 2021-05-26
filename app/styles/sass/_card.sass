@@ -58,3 +58,136 @@
       font-weight: bold
       font-size: 18px
       z-index: 10
+.volunteer
+  &_form
+    position: absolute
+    left: 0
+    top: 0
+    width: 100%
+    height: 100%
+    display: flex
+    justify-content: center
+    flex-direction: column
+    align-items: center
+    backdrop-filter: blur(18px)
+    z-index: 20
+    .close
+      position: absolute
+      cursor: pointer
+      right: 20px
+      top: 20px
+      color: #000
+      width: 28px
+      height: 28px
+      text-align: center
+      font-size: 1.5rem
+    input
+      width: 100%
+      height: 42px
+      padding: 15px
+      max-width: 250px
+      margin-bottom: 20px
+    button
+      cursor: pointer
+      width: 180px
+      height: 42px
+      line-height: 42px
+      border: 1px solid #000
+      font-weight: bold
+      font-size: 18px
+      background-color: transparent
+  &_item
+    display: flex
+    position: relative
+    flex-direction: column
+    width: 100%
+    height: 400px
+    max-width: 714px
+    padding: 27px 75px
+    border: 1px solid rgba(255, 255, 255, 0)
+    transition: all .3s ease
+    &:before
+      content: ''
+      position: absolute
+      opacity: 0
+      left: 0
+      top: 0
+      width: 100%
+      height: 100%
+      background: rgba(255, 255, 255, 0.68)
+      backdrop-filter: blur(33px) 
+      z-index: -1
+      transition: all .3s ease
+    &:after
+      content: ''
+      position: absolute
+      opacity: 0
+      left: 0
+      right: 0
+      top: 28px
+      margin: auto
+      width: 0
+      height: 0
+      border-radius: 100%
+      background-color: #FF7A8A
+      z-index: -2
+      transition-delay: 5s
+      transition: all .1s ease
+    &:hover, &.active
+      border: 1px solid rgba(255, 255, 255, 0.3)
+      // transition: all .3s ease
+      &:before
+        opacity: 1
+        transition: all .3s ease
+      &:after
+        opacity: 1
+        width: 87px
+        height: 87px
+        transition-delay: 0s
+        transition: all .5s ease
+      & .volunteer_item_action
+        opacity: 1
+        transition: all .5s ease
+    &_icon
+      width: 93px
+      height: 93px
+      margin: 0 auto 42px
+    &_title
+      text-align: center
+      font-weight: bold
+      font-size: 24px
+      line-height: 31px
+      margin-bottom: 17px
+    &_desc
+      font-size: 18px
+      line-height: 23px
+      text-align: justify
+    &_action
+      position: absolute
+      bottom: 27px
+      left: 0
+      right: 0
+      margin: auto
+      cursor: pointer
+      text-align: center
+      font-weight: bold
+      font-size: 14px
+      line-height: 18px
+      text-decoration-line: underline
+      opacity: 0
+      width: 110px
+      &:before
+        content: ''
+        position: absolute
+        left: -13px
+        top: 2px
+        width: 14px
+        height: 14px
+        border-radius: 100%
+        background-color: #000
+    &_list
+      display: flex
+      justify-content: space-between
+      flex-direction: row
+      flex-wrap: wrap
+      // gap: 45px 440px

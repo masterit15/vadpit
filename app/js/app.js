@@ -1,5 +1,6 @@
 // // Import jQuery module (npm i jquery)
 import $ from 'jquery'
+import detect from '../libs/browser.detect.min'
 import {gsap, TweenMax} from 'gsap'
 window.jQuery = $
 window.$ = $
@@ -7,18 +8,32 @@ window.$ = $
 document.addEventListener('DOMContentLoaded', () => {
 	const tl = gsap.timeline()
 	// определяем что за браузер
-	function get_name_browser() {
-		let ua = navigator.userAgent.split(' ').pop();
-		let version = ua.split('/').pop()
-		let name = ua.split('/').shift()
-		if(name && version) return {name, version}
-		return false;
+	var user = detect.parse(navigator.userAgent);
+	console.log(user.browser);
+	if (user.browser.family == 'IE'){
+			$('.header').addClass('damn_it_internet_explorer')
+			alert('Ваш браузер Internet Explorer, сайт может отображается не коректно, скачайте нормальный браузер!')
 	}
-	let browser = get_name_browser();
-	console.log(browser);
-	if (browser && browser.name == 'Edge' || browser.name == 'Internet Explorer'){
-			$('.header').addClass('blurnone')
-	}
+	
+	$('.volunteer_item_action').on('click', function(){
+		$('.volunteer_item').removeClass('active')
+		if($('.volunteer_form') && $('.volunteer_form').length > 0){
+			$('.volunteer_form').remove()
+		}
+		let volunteerForm = `<form class="volunteer_form">
+													<div class="close"><i class="fas fa-times"></i></div>
+													<input type="text" name="name" placeholder="Ваше имя" required>
+													<input type="text" name="phone" placeholder="Телефон" required>
+													<button type="submit">Отправить</button>
+												</form>`
+		let parent = $(this).parent('.volunteer_item').addClass('active')
+		$(parent).append(volunteerForm)
+		$('.close').on('click', function(){
+			$('.volunteer_form').fadeOut(200).remove()
+			$(parent).removeClass('active')
+		})
+		
+	})
 	$('#mobnav').on('click', function(){
 		$(this).toggleClass('active')
 		if($(this).hasClass('active')){
