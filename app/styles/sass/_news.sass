@@ -27,6 +27,13 @@
     justify-content: flex-start
     flex-direction: column
     width: 249px
+    text-decoration: none
+    color: #000
+    &:hover
+      color: #000
+      .news_item_title
+        transition: all .3s ease
+        text-decoration: underline
     // height: 320px
     &_media
       position: relative
@@ -46,12 +53,12 @@
         bottom: 0
         left: 0
         width: 100%
-        height: 0%
-        background: linear-gradient(0deg, rgba(#e5e5e5,1) 5%, rgba(255,255,255,0) 100%)
-        transition: height .1s ease-in
+        height: 100%
+        background-color: rgba(#000,0.2)
     &_view_count
       position: absolute
       left: 7px
+      color: #fff
       bottom: 13px
       font-size: 14px
       line-height: 100%
@@ -65,14 +72,14 @@
       line-height: 100%
       max-height: 50px
       overflow: hidden
-      &::before
-        content: ''
-        position: absolute
-        bottom: 0
-        left: 0
-        width: 100%
-        height: 100%
-        background: linear-gradient(0deg, rgba(#e5e5e5,1) 5%, rgba(255,255,255,0) 100%)
+      // &::before
+      //   content: ''
+      //   position: absolute
+      //   bottom: 0
+      //   left: 0
+      //   width: 100%
+      //   height: 100%
+      //   background: linear-gradient(0deg, rgba(#e5e5e5,1) 5%, rgba(255,255,255,0) 100%)
 .count
   flex-basis: 700px
   &_list
