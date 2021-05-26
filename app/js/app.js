@@ -6,7 +6,19 @@ window.$ = $
 
 document.addEventListener('DOMContentLoaded', () => {
 	const tl = gsap.timeline()
-
+	// определяем что за браузер
+	function get_name_browser() {
+		let ua = navigator.userAgent.split(' ').pop();
+		let version = ua.split('/').pop()
+		let name = ua.split('/').shift()
+		if(name && version) return {name, version}
+		return false;
+	}
+	let browser = get_name_browser();
+	console.log(browser);
+	if (browser && browser.name == 'Edge' || browser.name == 'Internet Explorer'){
+			$('.header').addClass('blurnone')
+	}
 	$('#mobnav').on('click', function(){
 		$(this).toggleClass('active')
 		if($(this).hasClass('active')){
