@@ -14,22 +14,28 @@ document.addEventListener('DOMContentLoaded', () => {
 			$('.header').addClass('damn_it_internet_explorer')
 			alert('Ваш браузер Internet Explorer, сайт может отображается не коректно, скачайте нормальный браузер!')
 	}
-	
+	$('.card_item_btn').on('click', function(){
+		let adoptGetForm = `<form class="form form_adopt_get">
+													<input type="text" name="name" placeholder="Ваше имя" required>
+													<input type="email" name="email" placeholder="Телефон" required>
+													<input type="text" name="phone" placeholder="Телефон" required>
+													<button type="submit">Отправить</button>
+												</form>`
+	})
 	$('.volunteer_item_action').on('click', function(){
 		$('.volunteer_item').removeClass('active')
-		if($('.volunteer_form') && $('.volunteer_form').length > 0){
-			$('.volunteer_form').remove()
+		if($('.form_volunteer') && $('.form_volunteer').length > 0){
+			$('.form_volunteer').remove()
 		}
-		let volunteerForm = `<form class="volunteer_form">
-													<div class="close"><i class="fas fa-times"></i></div>
+		let volunteerForm = `<form class="form form_volunteer">
 													<input type="text" name="name" placeholder="Ваше имя" required>
 													<input type="text" name="phone" placeholder="Телефон" required>
 													<button type="submit">Отправить</button>
 												</form>`
 		let parent = $(this).parent('.volunteer_item').addClass('active')
 		$(parent).append(volunteerForm)
-		$('.close').on('click', function(){
-			$('.volunteer_form').fadeOut(200).remove()
+		$(parent).find('.close').on('click', function(){
+			$('.form_volunteer').fadeOut(200).remove()
 			$(parent).removeClass('active')
 		})
 		
