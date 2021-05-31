@@ -64,10 +64,46 @@ section
       font-weight: bold
       font-size: 18px
       line-height: 23px
+#main
+  display: flex
+  justify-content: flex-start
+  flex-direction: row
+  margin: 111px auto 50px
+  width: 100%
+  max-width: 1400px
+  gap: 0 55px
+#sidebar
+  width: 100%
+  max-width: 320px
+  position: relative
+  display: flex
+  flex-direction: column
+  
+#content
+  display: flex
+  flex-direction: column
+  width: 100%
+  position: relative
+  
+#workarea
+  width: 100%
+  position: relative 
+  padding-left: 55px
+  &:before
+   content: ''
+   position: absolute
+   left: 0px
+   top: 0
+   width: 2px
+   height: 100%
+   background-color: rgba(0, 0, 0, 0.15)
 .damn_it_internet_explorer
   display: block
 @import 'header'
+@import 'sidebar'
 @import 'navigation'
+@import 'breadcrumbs'
+@import 'pagination'
 @import 'offer'
 @import 'news'
 @import 'tabs'

@@ -1,0 +1,33 @@
+.breadcrumbs
+  padding: 0
+  margin: 0 0 60px
+  display: flex
+  justify-content: flex-start
+  flex-direction: row
+  list-style: none
+  gap: 0 33px
+  li
+    position: relative
+    height: 18px
+    line-height: 18px
+    font-size: 14px
+    line-height: 18px
+    color: rgba(0, 0, 0, 0.6)
+    &:last-child
+      &:before
+        display: none
+    &:before
+      content: '\f054'
+      font-family: 'Font Awesome 5 Pro'
+      font-style: normal
+      font-weight: 900
+      font-size: 10px
+      position: absolute
+      right: -18px
+      top: 1.8px
+    a
+      color: #000
+      font-size: 14px
+      line-height: 18px
+      text-decoration: none
+

@@ -1,0 +1,22 @@
+.pagination
+  display: flex
+  justify-content: center
+  flex-direction: row
+  list-style: none
+  gap: 0 15px
+  li
+    a
+      display: block
+      width: 30px
+      height: 30px
+      color: #000
+      border: 1px solid #000000
+      text-align: center
+      text-decoration: none
+      &.pagination_arrow
+        border-color: transparent
+        &:hover
+      &:hover, &.active
+        color: #fff
+        background-color: #000
+    

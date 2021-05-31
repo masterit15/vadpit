@@ -1,0 +1,92 @@
+#sidebar
+  padding-top: 117px
+  .datepicker
+    width: 280px
+    height: 
+    border-radius: 0
+    border: none
+    padding: 20px
+    box-shadow: 0px 58px 30px -40px rgba(0, 0, 0, 0.25)
+    &--nav
+      position: relative
+      border-bottom: none
+      &-action
+        position: absolute
+        right: 0px
+        top: 5px
+        width: 12px
+        height: 18px
+        & svg
+          display: none
+        
+        &[data-action="prev"]
+          
+          right: 30px
+          &::before
+            content: '\f053'
+            position: absolute
+            right: 0
+            top: 0
+            font-family: 'Font Awesome 5 Pro'
+            color: #000
+            font-weight: 900
+            font-size: 18px
+            line-height: 18px
+        &[data-action="next"]
+          &::before
+            content: '\f054'
+            position: absolute
+            right: 0
+            top: 0
+            font-family: 'Font Awesome 5 Pro'
+            color: #000
+            font-weight: 900
+            font-size: 18px
+            line-height: 18px
+    &--days
+      &-names
+        margin-bottom: 18px
+        margin-top: 30px
+    &--day
+      &-name
+        font-size: 18px
+        line-height: 100%
+        color: rgba(0, 0, 0, 0.5)
+        text-transform: capitalize
+  .datepicker--cells
+    gap: 5px 0
+  .datepicker--cell.-in-range-, .datepicker--cell.-current-, .datepicker--cell
+    font-weight: bold
+    font-size: 18px
+    line-height: 100%
+  .datepicker--cell-day.-other-month-, .datepicker--cell-year.-other-decade-
+    font-weight: bold
+    font-size: 18px
+    line-height: 100%
+    color: rgba(0, 0, 0, 0.5)
+  .datepicker--cell
+    &.-current-
+      color: #000
+    &.-in-range-, &.-focus-
+      border-radius: 0
+      background: rgba(#000,.2)
+  .datepicker--cell.-range-to-, .datepicker--cell.-range-from-
+    border: none
+    background: rgba(#000,.2)
+    border-radius: 0
+    &.-selected-, &.-focus-
+      color: #fff
+      background: #000
+  .datepicker--nav-title
+    width: 100%
+    max-width: 150px
+    justify-content: space-between
+    font-weight: bold
+    font-size: 24px
+    line-height: 100%
+    color: #000000
+    i
+      text-align: center
+      font-size: 24px
+      font-weight: normal
+      line-height: 100%
