@@ -2,13 +2,13 @@
 import $ from 'jquery'
 import detect from '../libs/browser.detect.min'
 import {gsap, TweenMax} from 'gsap'
+import Splide from '@splidejs/splide'
 window.jQuery = $
 window.$ = $
 const datepicker = require('air-datepicker')
 document.addEventListener('DOMContentLoaded', () => {
 	const tl = gsap.timeline()
 	// определяем что за браузер
-
 	$('.datepicker-here').datepicker({
 		range: true,
 		onSelect: function (formattedDate, date, inst){
@@ -16,16 +16,13 @@ document.addEventListener('DOMContentLoaded', () => {
 		}
 	})
 	$(document).on("click", function (event) {
-    if (
-		!$(event.target).hasClass('volunteer_item_action') &&
-		!$(event.target).hasClass('card_item_btn') && 
-		!$(event.target).hasClass('form') && 
-		$(event.target).closest(".form").length === 0
-		) {
+    if (!$(event.target).hasClass('outsideclick') && $(event.target).closest(".outsideclick").length === 0) {
 			$('.form_volunteer').parent().removeClass('active')
 			$('.form').removeClass('show')
+			$('.card_popup').removeClass('show')
 			setTimeout(()=>{
 				$('.form').remove()
+				$('.card_popup').remove()
 			}, 200)
     }
   });
@@ -42,11 +39,66 @@ document.addEventListener('DOMContentLoaded', () => {
 			$('.header').addClass('damn_it_internet_explorer')
 			alert('Ваш браузер Internet Explorer, сайт может отображается не коректно, скачайте нормальный браузер!')
 	}
+	$('.card_list_detail .card_item_btn').on('click', function(){
+		let cardPopup = `<div class="card_popup outsideclick">
+											<div class="card_popup_carousel">
+												<div class="splide">
+													<div class="splide__arrows">
+														<button class="splide__arrow splide__arrow--prev">
+															<i class="far fa-chevron-left"></i>
+														</button>
+														<button class="splide__arrow splide__arrow--next">
+															<i class="far fa-chevron-right"></i>
+														</button>
+													</div>
+													<div class="splide__track">
+														<ul class="splide__list">
+															
+														</ul>
+													</div>
+												</div>
+											</div>
+											<div class="card_popup_content">
+												<h2 class="card_popup_content_title"></h2>
+												<ul class="card_popup_content_list"></ul>
+												<a class="card_item_btn" data-img="./images/dist/pexels-dog3.jpg" data-name="Батон" data-id="3">Забрать</a>
+											</div>
+										</div>`
+		
+		let parent = $('.card_list_detail')
+		$(parent).append(cardPopup)
+		let imgs = []
+		if($(this).data('imgs').includes('|')){
+			imgs = $(this).data('imgs').split('|')
+			imgs.forEach(img => {
+				$('.card_popup').find('.splide__list').append(`<li class="splide__slide"><div class="card_media" style="background-image: url('${img}');"></div></li>`)
+			});
+		}else{
+			$('.card_popup').find('.splide__list').append(`<li class="splide__slide"><div class="card_media" style="background-image: url('${$(this).data('imgs')}');"></div></li>`)
+		}
+		let listItems = `
+							<li><strong>Место отлова:</strong>${$(this).data('capture-address')}</li>
+							<li><strong>Дата отлова:</strong>${$(this).data('capture-date')}</li>
+							<li><strong>Лечение:</strong>${$(this).data('treatment')}</li>
+							<li><strong>Пол:</strong>${$(this).data('sex')}</li>
+							<li><strong>Описание:</strong>${$(this).data('desc')}</li>
+							`
+		$('.card_popup_content_title').text($(this).data('name'))
+		$('.card_popup_content_list').append(listItems)
+		setTimeout(()=>{
+			new Splide( '.splide', {
+				type  : 'fade',
+				rewind: true,
+				pagination: false
+			} ).mount();
+			$('.card_popup').addClass('show')
+		}, 0)
+	})
 	$('.card_item_btn').on('click', function(){
 		if($('.form_adopt_get') && $('.form_adopt_get').length > 0){
 			$('.form_adopt_get').remove()
 		}
-		let adoptGetForm = `<form class="form form_adopt_get" action="/">
+		let adoptGetForm = `<form class="form form_adopt_get outsideclick" action="/">
 												<div class="form_adopt_get_media" style="background-image: url(./images/dist/pexels-dog2.jpg);"></div>
 												<div class="form_adopt_get_fields">
 													<h2 class="form_adopt_get_title">Забрать питомца</h2>
@@ -97,7 +149,7 @@ document.addEventListener('DOMContentLoaded', () => {
 		if($('.form_volunteer') && $('.form_volunteer').length > 0){
 			$('.form_volunteer').remove()
 		}
-		let volunteerForm = `<form class="form form_volunteer">
+		let volunteerForm = `<form class="form form_volunteer outsideclick">
 													<div class="group">
 														<i class="fal fa-user-circle"></i>
 														<input class="input" type="text" name="name" required>
@@ -150,9 +202,9 @@ document.addEventListener('DOMContentLoaded', () => {
 		}
 	})
 	$('.section_nav_link').on('click', function(){
-		let elId = $(this).attr('href')
+		let elId = $(this).attr('href').split('#')
 		$('html, body').animate({
-				scrollTop: $(elId).offset().top
+				scrollTop: $(`#${elId[1]}`).offset().top
 		}, 800);
 	})
 	// табы
