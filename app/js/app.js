@@ -5,16 +5,106 @@ import {gsap, TweenMax} from 'gsap'
 import Splide from '@splidejs/splide'
 window.jQuery = $
 window.$ = $
-const datepicker = require('air-datepicker')
+require('air-datepicker')
 document.addEventListener('DOMContentLoaded', () => {
 	const tl = gsap.timeline()
-	// определяем что за браузер
-	$('.datepicker-here').datepicker({
-		range: true,
-		onSelect: function (formattedDate, date, inst){
-			console.log(formattedDate);
+	let filterParams = {
+		name: '',
+		sex: '',
+		petsType: '',
+		dateFrom: '',
+		dateTo: '',
+	}
+	// отслеживаем изменения параметров фильтра
+	let filterProxied = new Proxy(filterParams, {
+		get: function(target, prop) {
+			// console.log({
+			// 	type: "get",
+			// 	target,
+			// 	prop
+			// });
+			return Reflect.get(target, prop);
+		},
+		set: function(target, prop, value) {
+			// console.log({
+			// 	type: "set",
+			// 	target,
+			// 	prop,
+			// 	value
+			// });
+			filterPets(target)
+			return Reflect.set(target, prop, value);
+		}
+	});
+	// функция для запроса фильтрации
+	function filterPets(params){
+		$.ajax({
+			type: "GET",
+			url: $('#filter').data('url'),
+			data: params,
+			beforeSend: function () {
+				console.log('ajax beforeSend')
+			},
+			success: function (res) {
+					console.log('success',params)
+			},
+			complete: function () {
+				console.log('ajax complete')
+			},
+			error: function (err) {
+					console.error('success',err);
+			}
+	});
+	}
+	// фильтрация по имени
+	$('.filter_input').on('change', function(){
+		if($(this).val().length > 0 ){
+			filterProxied.name = $(this).val()
+		}else{
+			filterProxied.name = ''
 		}
 	})
+	$('.filter_btn').on('click', function(){
+		$(this).parent().children('button').removeClass('active')
+		$(this).addClass('active')
+		filterProxied[$(this).data('param')] = $(this).data('value')
+	})
+	// инициализация календаря (фильтра по датам)
+	$('.datepicker-here').datepicker({
+		range: true,
+		position: 'top left',
+		onSelect: function (formattedDate, date, inst){
+			let dateArr = formattedDate.includes(' - ') ? formattedDate.split(' - ') : formattedDate
+			if(dateArr.length > 1){
+				filterProxied.dateFrom = dateArr[0]
+				filterProxied.dateTo = dateArr[1]
+			}else{
+				filterProxied.dateFrom = dateArr
+			}
+		}
+	})
+	// вычисляем поле датапикера от низа если не хватает то открываем календарь сверху, если хватает то снизу
+	let datepicker = $('.datepicker-here').datepicker().data('datepicker')
+	if(document.querySelector('.filter_input.datepicker-here')){
+		var distance = Math.abs(document.querySelector('.filter_input.datepicker-here').getBoundingClientRect().bottom - window.innerHeight)
+		window.onresize = function(){
+			distance = Math.abs(document.querySelector('.filter_input.datepicker-here').getBoundingClientRect().bottom - window.innerHeight)
+			if(distance >= 370){
+				datepicker.update({position: 'bottom left'})
+			}else{
+				datepicker.update({position: 'top left'})
+			}
+		};
+		window.addEventListener('scroll', ()=>{
+			distance = Math.abs(document.querySelector('.filter_input.datepicker-here').getBoundingClientRect().bottom - window.innerHeight)
+			if(distance >= 370){
+				datepicker.update({position: 'bottom left'})
+			}else{
+				datepicker.update({position: 'top left'})
+			}
+		})
+	}
+	// закрываем элементы при клике вне блока
 	$(document).on("click", function (event) {
     if (!$(event.target).hasClass('outsideclick') && $(event.target).closest(".outsideclick").length === 0) {
 			$('.form_volunteer').parent().removeClass('active')
@@ -26,6 +116,8 @@ document.addEventListener('DOMContentLoaded', () => {
 			}, 200)
     }
   });
+
+	// добавляем активный класс label при взаимодействии с полем ввода
 	$('.input').on('input',function(){
 		let label = $(this).closest('.group').children('.label');
 		if($(this).val().length > 0) {
@@ -34,11 +126,15 @@ document.addEventListener('DOMContentLoaded', () => {
 			$(label).removeClass('active')
 		}
 	})
-	var user = detect.parse(navigator.userAgent);
+
+	// определяем что за браузер
+	const user = detect.parse(navigator.userAgent);
 	if (user.browser.family == 'IE'){
 			$('.header').addClass('damn_it_internet_explorer')
 			alert('Ваш браузер Internet Explorer, сайт может отображается не коректно, скачайте нормальный браузер!')
 	}
+
+	// показываем детальную информацию о питомце по клику на него
 	$('.card_list_detail .card_item_btn').on('click', function(){
 		let cardPopup = `<div class="card_popup outsideclick">
 											<div class="card_popup_carousel">
@@ -61,10 +157,9 @@ document.addEventListener('DOMContentLoaded', () => {
 											<div class="card_popup_content">
 												<h2 class="card_popup_content_title"></h2>
 												<ul class="card_popup_content_list"></ul>
-												<a class="card_item_btn" data-img="./images/dist/pexels-dog3.jpg" data-name="Батон" data-id="3">Забрать</a>
+												<a class="card_item_btn form_open" data-img="./images/dist/pexels-dog3.jpg" data-name="Батон" data-id="3">Забрать</a>
 											</div>
 										</div>`
-		
 		let parent = $('.card_list_detail')
 		$(parent).append(cardPopup)
 		let imgs = []
@@ -93,57 +188,65 @@ document.addEventListener('DOMContentLoaded', () => {
 			} ).mount();
 			$('.card_popup').addClass('show')
 		}, 0)
+		initOpenForm()
 	})
-	$('.card_item_btn').on('click', function(){
-		if($('.form_adopt_get') && $('.form_adopt_get').length > 0){
-			$('.form_adopt_get').remove()
-		}
-		let adoptGetForm = `<form class="form form_adopt_get outsideclick" action="/">
-												<div class="form_adopt_get_media" style="background-image: url(./images/dist/pexels-dog2.jpg);"></div>
-												<div class="form_adopt_get_fields">
-													<h2 class="form_adopt_get_title">Забрать питомца</h2>
-												<div class="group">
-													<i class="fal fa-user-circle"></i>
-													<input class="input" type="text" name="name" required>
-													<label class="label">Введите имя</label>
+
+	// отображаем форму (забрать питомца)
+	function initOpenForm(){
+		$('.form_open').on('click', function(){
+			if($('.form_adopt_get') && $('.form_adopt_get').length > 0){
+				$('.form_adopt_get').remove()
+			}
+			let adoptGetForm = `<form class="form form_adopt_get outsideclick" action="/">
+													<div class="form_adopt_get_media" style="background-image: url(./images/dist/pexels-dog2.jpg);"></div>
+													<div class="form_adopt_get_fields">
+														<h2 class="form_adopt_get_title">Забрать питомца</h2>
+													<div class="group">
+														<i class="fal fa-user-circle"></i>
+														<input class="input" type="text" name="name" required>
+														<label class="label">Введите имя</label>
+													</div>
+													<div class="group">
+														<i class="fal fa-envelope"></i>
+														<input class="input" type="email" name="email" required>
+														<label class="label">Введите e-mail</label>
+													</div>
+													<div class="group">
+														<i class="far fa-phone"></i>
+														<input class="input" type="text" name="phone" required>
+														<label class="label">Введите номер телефона</label>
+													</div>
+													<button type="submit">Оставить заявку</button>
 												</div>
-												<div class="group">
-													<i class="fal fa-envelope"></i>
-													<input class="input" type="email" name="email" required>
-													<label class="label">Введите e-mail</label>
+												</form>`
+			let parent = $('.form_parent')
+			console.log(parent);
+			$(parent).append(adoptGetForm)
+			$('.form_adopt_get_media').css({'background-image' : `url(${$(this).data('img')})`})
+			setTimeout(()=>{
+				$('.form_adopt_get').addClass('show')
+			}, 0)
+			$('.form_adopt_get').on('submit', function(e){
+				e.preventDefault()
+				e.stopPropagation()
+				let succesRes = `<div class="group success">
+													<i class="far fa-user-check"></i>
+													<label class="label">Ваша заявка принята. Мы свяжемся с Вами в ближайшее время</label>
 												</div>
-												<div class="group">
-													<i class="far fa-phone"></i>
-													<input class="input" type="text" name="phone" required>
-													<label class="label">Введите номер телефона</label>
-												</div>
-												<button type="submit">Оставить заявку</button>
-											</div>
-											</form>`
-		let parent = $('.tabs_content.active')
-		$(parent).append(adoptGetForm)
-		$('.form_adopt_get_media').css({'background-image' : `url(${$(this).data('img')})`})
-		setTimeout(()=>{
-			$('.form_adopt_get').addClass('show')
-		}, 0)
-		$('.form_adopt_get').on('submit', function(e){
-			e.preventDefault()
-			e.stopPropagation()
-			let succesRes = `<div class="group success">
-												<i class="far fa-user-check"></i>
-												<label class="label">Ваша заявка принята. Мы свяжемся с Вами в ближайшее время</label>
-											</div>
-											<button class="close" type="submit">Закрыть</button>
-											`
-			$(this).html(succesRes)
-			$('.close').on('click', function(){
-				$('.form_adopt_get').removeClass('show')
-				setTimeout(()=>{
-					$('.form_adopt_get').remove()
-				}, 200)
+												<button class="close" type="submit">Закрыть</button>
+												`
+				$(this).html(succesRes)
+				$('.close').on('click', function(){
+					$('.form_adopt_get').removeClass('show')
+					setTimeout(()=>{
+						$('.form_adopt_get').remove()
+					}, 200)
+				})
 			})
 		})
-	})
+	}
+	initOpenForm()
+	// отображаем форму (стать волонтером)
 	$('.volunteer_item_action').on('click', function(){
 		$('.volunteer_item').removeClass('active')
 		if($('.form_volunteer') && $('.form_volunteer').length > 0){
@@ -187,6 +290,8 @@ document.addEventListener('DOMContentLoaded', () => {
 		})
 		
 	})
+
+	// кнопка мобильного меню
 	$('#mobnav').on('click', function(){
 		$(this).toggleClass('active')
 		if($(this).hasClass('active')){
@@ -201,12 +306,15 @@ document.addEventListener('DOMContentLoaded', () => {
 			// }, 100)
 		}
 	})
-	$('.section_nav_link').on('click', function(){
+
+	// плавный скрол до якоря по клику на ссылку
+	$('.section_nav_link a').on('click', function(){
 		let elId = $(this).attr('href').split('#')
 		$('html, body').animate({
 				scrollTop: $(`#${elId[1]}`).offset().top
 		}, 800);
 	})
+
 	// табы
 	$('.tabs_action_btn').on('click', function(){
 		$('.tabs_action_btn').removeClass('active')
