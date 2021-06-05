@@ -5,8 +5,15 @@
   list-style: none
   gap: 0 15px
   margin: 40px 0
-  li
-    a
+  .screen-reader-text
+    display: none
+  .nav-links
+    display: flex
+    justify-content: center
+    flex-direction: row
+    list-style: none
+    gap: 0 15px
+    .page-numbers
       display: block
       width: 30px
       height: 30px
@@ -14,10 +21,11 @@
       border: 1px solid #000000
       text-align: center
       text-decoration: none
-      &.pagination_arrow
+      &.prev, &.next
         border-color: transparent
         &:hover
-      &:hover, &.active
+      &:hover, &.current
         color: #fff
         background-color: #000
+
     
