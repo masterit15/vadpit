@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // });
             setTimeout(()=>{
                 filterPets(target)
-            },0)
+            },10)
             
             return Reflect.set(target, prop, value);
         }
@@ -43,14 +43,14 @@ document.addEventListener('DOMContentLoaded', () => {
     function filterPets(params) {
         params['action'] = 'petsFilter'
         $.ajax({
-            type: "GET",
+            type: "POST",
             url: $('#filter').data('url'),
             data: params,
             beforeSend: function() {
                 console.log('ajax beforeSend')
             },
             success: function(res) {
-                $('#workarea').html(res)
+                $('.card_list_detail').html(res)
                 console.log('success', res)
             },
             complete: function() {
@@ -79,12 +79,13 @@ document.addEventListener('DOMContentLoaded', () => {
             range: true,
             position: 'top left',
             onSelect: function(formattedDate, date, inst) {
-                let dateArr = formattedDate.includes(' - ') ? formattedDate.split(' - ') : formattedDate
-                if (dateArr.length > 1) {
+                if (formattedDate.includes(' - ')) {
+                    let dateArr = formattedDate.split(' - ')
                     filterProxied.dateFrom = dateArr[0]
                     filterProxied.dateTo = dateArr[1]
                 } else {
-                    filterProxied.dateFrom = dateArr
+                    filterProxied.dateFrom = formattedDate
+                    filterProxied.dateTo = ''
                 }
             }
         })

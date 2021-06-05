@@ -1,5 +1,6 @@
 let preprocessor = 'sass', // Preprocessor (sass, less, styl); 'sass' also work with the Scss syntax in blocks/ folder.
-		fileswatch   = 'html,htm,txt,json,md,woff2' // List of files extensions for watching & hard reload
+		fileswatch   = 'php,html,htm,txt,json,md,woff2' // List of files extensions for watching & hard reload
+		basePath = 'vladpitomnik/'
 
 const { src, dest, parallel, series, watch } = require('gulp')
 const browserSync  = require('browser-sync').create()
@@ -22,19 +23,22 @@ const del          = require('del')
 
 function browsersync() {
 	browserSync.init({
-		server: {
-			baseDir: 'app/',
-			middleware: bssi({ baseDir: 'app/', ext: '.html' })
+		// server: {
+		// 	baseDir: basePath,
+		// 	middleware: bssi({ baseDir: `${basePath}`, ext: '.html' })
+		// },
+		proxy: {
+			target: "http://pitnik.rg/",
 		},
-		ghostMode: { clicks: false },
+		// ghostMode: { clicks: false },
 		notify: false,
 		online: true,
-		// tunnel: 'yousutename', // Attempt to use the URL https://yousutename.loca.lt
+		// tunnel: 'pitnic.rg', // Attempt to use the URL https://yousutename.loca.lt
 	})
 }
 
 function scripts() {
-	return src(['app/js/*.js', '!app/js/*.min.js'])
+	return src([`${basePath}js/*.js`, `!${basePath}js/*.min.js`])
 		.pipe(webpack({
 			mode: 'production',
 			performance: { hints: false },
@@ -55,41 +59,41 @@ function scripts() {
 			this.emit('end')
 		})
 		.pipe(rename('app.min.js'))
-		.pipe(dest('app/js'))
+		.pipe(dest(`${basePath}js`))
 		.pipe(browserSync.stream())
 }
 
 function styles() {
-	return src([`app/styles/${preprocessor}/*.*`, `!app/styles/${preprocessor}/_*.*`])
+	return src([`${basePath}styles/${preprocessor}/*.*`, `!${basePath}styles/${preprocessor}/_*.*`])
 		.pipe(eval(`${preprocessor}glob`)())
 		.pipe(eval(preprocessor)())
 		.pipe(autoprefixer({ overrideBrowserslist: ['last 10 versions'], grid: true }))
 		.pipe(cleancss({ level: { 1: { specialComments: 0 } },/* format: 'beautify' */ }))
 		.pipe(rename({ suffix: ".min" }))
-		.pipe(dest('app/css'))
+		.pipe(dest(`${basePath}css`))
 		.pipe(browserSync.stream())
 }
 
 function images() {
-	return src(['app/images/src/**/*'])
-		.pipe(newer('app/images/dist'))
+	return src([`${basePath}images/src/**/*`])
+		.pipe(newer(`${basePath}images/dist`))
 		.pipe(imagemin())
-		.pipe(dest('app/images/dist'))
+		.pipe(dest(`${basePath}images/dist`))
 		.pipe(browserSync.stream())
 }
 
 function buildcopy() {
 	return src([
-		'{app/js,app/css}/*.min.*',
-		'app/images/**/*.*',
-		'!app/images/src/**/*',
-		'app/fonts/**/*'
-	], { base: 'app/' })
+		`{${basePath}js,${basePath}css}/*.min.*`,
+		`${basePath}images/**/*.*`,
+		`!${basePath}images/src/**/*`,
+		`${basePath}fonts/**/*`
+	], { base: `${basePath}` })
 	.pipe(dest('dist'))
 }
 
 async function buildhtml() {
-	let includes = new ssi('app/', 'dist/', '/**/*.html')
+	let includes = new ssi(`${basePath}', 'dist/', '/**/*.html`)
 	includes.compile()
 	del('dist/parts', { force: true })
 }
@@ -115,10 +119,10 @@ function deploy() {
 }
 
 function startwatch() {
-	watch(`app/styles/${preprocessor}/**/*`, { usePolling: true }, styles)
-	watch(['app/js/**/*.js', '!app/js/**/*.min.js'], { usePolling: true }, scripts)
-	watch('app/images/src/**/*.{jpg,jpeg,png,webp,svg,gif}', { usePolling: true }, images)
-	watch(`app/**/*.{${fileswatch}}`, { usePolling: true }).on('change', browserSync.reload)
+	watch(`${basePath}styles/${preprocessor}/**/*`, { usePolling: true }, styles)
+	watch([`${basePath}js/**/*.js`, `!${basePath}js/**/*.min.js`], { usePolling: true }, scripts)
+	watch(`${basePath}images/src/**/*.{jpg,jpeg,png,webp,svg,gif}`, { usePolling: true }, images)
+	watch(`${basePath}**/*.{${fileswatch}}`, { usePolling: true }).on('change', browserSync.reload)
 }
 
 exports.scripts = scripts
