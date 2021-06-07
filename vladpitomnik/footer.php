@@ -27,7 +27,7 @@
 				<a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="logo">
 					<?$custom_logo__url = wp_get_attachment_image_src( get_theme_mod( 'custom_logo' ), 'full' )?>
 					<img src="<?=$custom_logo__url[0]?>" alt="">
-					<?php bloginfo( 'name' ); ?>
+					ВМКУ "Владпитомник"
 				</a>
 				<?php
 					wp_nav_menu(

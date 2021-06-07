@@ -10,7 +10,6 @@ window.onload = ()=>{
     $('.loader').fadeOut(200)
 }
 document.addEventListener('DOMContentLoaded', () => {
-    
     const tl = gsap.timeline()
     let filterParams = {
             name: '',
@@ -117,19 +116,29 @@ document.addEventListener('DOMContentLoaded', () => {
     })
         // инициализация календаря (фильтра по датам)
     $('.datepicker-here').datepicker({
-            range: true,
-            position: 'top left',
-            onSelect: function(formattedDate, date, inst) {
-                if (formattedDate.includes(' - ')) {
-                    let dateArr = formattedDate.split(' - ')
-                    filterProxied.dateFrom = dateArr[0]
-                    filterProxied.dateTo = dateArr[1]
-                } else {
-                    filterProxied.dateFrom = formattedDate
-                    filterProxied.dateTo = ''
-                }
+        range: true,
+        position: 'top left',
+        onSelect: function(formattedDate, date, inst) {
+            if (formattedDate.includes(' - ')) {
+                let dateArr = formattedDate.split(' - ')
+                filterProxied.dateFrom = dateArr[0]
+                filterProxied.dateTo = dateArr[1]
+            } else {
+                filterProxied.dateFrom = formattedDate
+                filterProxied.dateTo = ''
             }
-        })
+        }
+    })
+    $('.datepicker-here').hide()
+    $('.datapicker_trigger').on('click', function(){
+        $(this).toggleClass('active')
+        if($(this).hasClass('active')){
+            $('.datepicker-here').fadeIn(200)
+        }else{
+            $('.datepicker-here').fadeOut(200)
+        }
+    })
+
         // вычисляем поле датапикера от низа если не хватает то открываем календарь сверху, если хватает то снизу
     let datepicker = $('.datepicker-here').datepicker().data('datepicker')
     if (document.querySelector('.filter_input.datepicker-here')) {
@@ -184,29 +193,29 @@ document.addEventListener('DOMContentLoaded', () => {
     // показываем детальную информацию о питомце по клику на него
     $('.card_list_detail .card_item_btn').on('click', function() {
         let cardPopup = `<div class="card_popup outsideclick">
-											<div class="card_popup_carousel">
-												<div class="splide">
-													<div class="splide__arrows">
-														<button class="splide__arrow splide__arrow--prev">
-															<i class="far fa-chevron-left"></i>
-														</button>
-														<button class="splide__arrow splide__arrow--next">
-															<i class="far fa-chevron-right"></i>
-														</button>
-													</div>
-													<div class="splide__track">
-														<ul class="splide__list">
-															
-														</ul>
-													</div>
-												</div>
-											</div>
-											<div class="card_popup_content">
-												<h2 class="card_popup_content_title"></h2>
-												<ul class="card_popup_content_list"></ul>
-												<a class="card_item_btn form_open" data-img="./images/dist/pexels-dog3.jpg" data-name="Батон" data-id="3">Забрать</a>
-											</div>
-										</div>`
+                            <div class="card_popup_carousel">
+                                <div class="splide">
+                                    <div class="splide__arrows">
+                                        <button class="splide__arrow splide__arrow--prev">
+                                            <i class="far fa-chevron-left"></i>
+                                        </button>
+                                        <button class="splide__arrow splide__arrow--next">
+                                            <i class="far fa-chevron-right"></i>
+                                        </button>
+                                    </div>
+                                    <div class="splide__track">
+                                        <ul class="splide__list">
+                                            
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card_popup_content">
+                                <h2 class="card_popup_content_title"></h2>
+                                <ul class="card_popup_content_list"></ul>
+                                <a class="card_item_btn form_open" data-img="./images/dist/pexels-dog3.jpg" data-name="Батон" data-id="3">Забрать</a>
+                            </div>
+                        </div>`
         let parent = $('.card_list_detail')
         $(parent).append(cardPopup)
         let imgs = []
@@ -244,31 +253,44 @@ document.addEventListener('DOMContentLoaded', () => {
             if ($('.form_adopt_get') && $('.form_adopt_get').length > 0) {
                 $('.form_adopt_get').remove()
             }
-            let adoptGetForm = `<form class="form form_adopt_get outsideclick" action="/">
-													<div class="form_adopt_get_media" style="background-image: url(./images/dist/pexels-dog2.jpg);"></div>
-													<div class="form_adopt_get_fields">
-														<h2 class="form_adopt_get_title">Забрать питомца</h2>
-													<div class="group">
-														<i class="fal fa-user-circle"></i>
-														<input class="input" type="text" name="name" required>
-														<label class="label">Введите имя</label>
-													</div>
-													<div class="group">
-														<i class="fal fa-envelope"></i>
-														<input class="input" type="email" name="email" required>
-														<label class="label">Введите e-mail</label>
-													</div>
-													<div class="group">
-														<i class="far fa-phone"></i>
-														<input class="input" type="text" name="phone" required>
-														<label class="label">Введите номер телефона</label>
-													</div>
-													<button type="submit">Оставить заявку</button>
-												</div>
-												</form>`
+            let adoptGetForm = `<form class="form form_adopt_get outsideclick" action="/wp-content/themes/vladpitomnik/handler.php">
+                                    <div class="loader" data-filter="${$(this).data('type')}">
+                                        <img src="/wp-content/themes/vladpitomnik/images/dist/dog.gif" alt="">
+                                        <img src="/wp-content/themes/vladpitomnik/images/dist/cat.gif" alt="">
+                                    </div>
+                                    <div class="form_wrap">
+                                        <div class="form_adopt_get_media" style="background-image: url(./images/dist/pexels-dog2.jpg);"></div>
+                                            <div class="form_adopt_get_fields">
+                                                <h2 class="form_adopt_get_title">Забрать питомца</h2>
+                                            <div class="group">
+                                                <i class="fal fa-user-circle"></i>
+                                                <input class="input" type="text" name="name" required>
+                                                <label class="label">Введите имя</label>
+                                            </div>
+                                            <div class="group">
+                                                <i class="fal fa-envelope"></i>
+                                                <input class="input" type="email" name="email" required>
+                                                <label class="label">Введите e-mail</label>
+                                            </div>
+                                            <div class="group">
+                                                <i class="far fa-phone"></i>
+                                                <input class="input" type="text" name="phone" required>
+                                                <label class="label">Введите номер телефона</label>
+                                            </div>
+                                            <button type="submit">Оставить заявку</button>
+                                        </div>
+                                        <input class="token" type="hidden" name="token"/>
+                                        <input class="input" type="hidden" name="pets_id" value="${$(this).data('id')}"/>
+                                    </div>
+                                </form>`
             let parent = $('.form_parent')
-            console.log(parent);
             $(parent).append(adoptGetForm)
+            grecaptcha.ready(function() {
+                grecaptcha.execute('6LcIQRobAAAAAJTkDMK6jAduINgRvPq-nB3jhKo4', {action: 'homepage'}).then(function(token) {
+                    document.querySelector('.token').value = token
+                });
+            });
+            $('.form_adopt_get .loader').fadeOut(200)
             $('.form_adopt_get_media').css({ 'background-image': `url(${$(this).data('img')})` })
             setTimeout(() => {
                 $('.form_adopt_get').addClass('show')
@@ -276,19 +298,35 @@ document.addEventListener('DOMContentLoaded', () => {
             $('.form_adopt_get').on('submit', function(e) {
                 e.preventDefault()
                 e.stopPropagation()
-                let succesRes = `<div class="group success">
-													<i class="far fa-user-check"></i>
-													<label class="label">Ваша заявка принята. Мы свяжемся с Вами в ближайшее время</label>
-												</div>
-												<button class="close" type="submit">Закрыть</button>
-												`
-                $(this).html(succesRes)
-                $('.close').on('click', function() {
-                    $('.form_adopt_get').removeClass('show')
-                    setTimeout(() => {
-                        $('.form_adopt_get').remove()
-                    }, 200)
+                $.ajax({
+                    url: $(this).attr('action'),
+                    type: 'POST',
+                    data: new FormData(this),//{name,email,phone,token},
+                    contentType: false,
+                    cache: false,
+                    processData: false,
+                    beforeSend: function () {
+                        $('.form_adopt_get .loader').fadeIn(200)
+                    },
+                    success: function (res) {
+                        if (res.success) {
+                            $('.form_adopt_get .form_wrap').html(res.message)
+                        }
+                        $('.form_adopt_get .loader').fadeOut(200)
+                        $('.close').on('click', function() {
+                            $('.form_adopt_get').removeClass('show')
+                            setTimeout(() => {
+                                $('.form_adopt_get').remove()
+                            }, 200)
+                        })
+                    },
+                    complete: function () {
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                        console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+                    }
                 })
+                return false;
             })
         })
     }
@@ -299,7 +337,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if ($('.form_volunteer') && $('.form_volunteer').length > 0) {
             $('.form_volunteer').remove()
         }
-        let volunteerForm = `<form class="form form_volunteer outsideclick">
+        let volunteerForm = `<form class="form form_volunteer outsideclick" >
 													<div class="group">
 														<i class="fal fa-user-circle"></i>
 														<input class="input" type="text" name="name" required>
@@ -364,12 +402,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // табы
     $('.tabs_action_btn').on('click', function() {
-            $('.tabs_action_btn').removeClass('active')
-            $('.tabs_content').removeClass('active')
-            let index = $(this).addClass('active').data('item')
-            $('.tabs_content').fadeOut(200)
-            $('.tabs_content[data-content="' + index + '"]').addClass('active').fadeIn(200)
-        })
+        let items = $('.tabs_content').find('.card_item')
+        tl.set(items, {x: 100, y: 50, opacity: 1}, 1).reverse()
+        $('.tabs_action_btn').removeClass('active')
+        $('.tabs_content').removeClass('active')
+        let index = $(this).addClass('active').data('item')
+        $('.tabs_content').fadeOut(200)
+
+        let tabContent = $('.tabs_content[data-content="' + index + '"]').addClass('active').fadeIn(200)
+        items = $(tabContent).find('.card_item')
+        console.log(items);
+
+        tl.set(items, {x: 100, y: 50, opacity: 1}, 1).reverse()
+
+    })
         // анимируем цифры
     const numberBlock = document.querySelector(".count");
     var scores = [];

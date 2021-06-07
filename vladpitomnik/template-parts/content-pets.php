@@ -19,13 +19,15 @@
   <div id="workarea">
     <div class="card_list_detail form_parent">
       <?
-      $name = $_GET['name'] ? $_GET['name'] : '';
-      $sex = $_GET['sex'] ? $_GET['sex'] : '';
-      $type = $_GET['petsType'] ? $_GET['petsType'] : '';
-      $dateFrom = $_GET['dateFrom'] ? new DateTime($_GET['dateFrom']) : '';
-      $dateTo = $_GET['dateTo'] ? new DateTime($_GET['dateTo']) : '';
-      $dateFrom = date_format($dateFrom, 'Y-m-d');
-      $dateTo = date_format($dateTo, 'Y-m-d');
+      $name = isset($_GET['name']) ? $_GET['name'] : '';
+      $sex = isset($_GET['sex']) ? $_GET['sex'] : '';
+      $type = isset($_GET['petsType']) ? $_GET['petsType'] : '';
+      $dateFrom = isset($_GET['dateFrom']) ? new DateTime($_GET['dateFrom']) : '';
+      $dateTo = isset($_GET['dateTo']) ? new DateTime($_GET['dateTo']) : '';
+      if($dateFrom && $dateTo){
+        $dateFrom = date_format($dateFrom, 'Y-m-d');
+        $dateTo = date_format($dateTo, 'Y-m-d');
+      }
       $paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
       $args = array(
         'orderby' => 'date', // we will sort posts by date
@@ -48,11 +50,7 @@
         );
       }
       if($type){
-        $args['meta_query'][] = array(
-          'key' => 'pets_type',
-          'value' => $type,
-          'compare' => '=',
-        );
+        $args['pets-cat'] = $type;
       }
       if($dateFrom && !$dateTo){
         $args['meta_query'][] = array(
@@ -90,13 +88,15 @@
           <div class="card_item_desc"><?php the_excerpt();?></div>
         </div>
         <?php show_thumbnails_list(); ?>
-        <a class="card_item_btn outsideclick" data-imgs="<?=$imgs?>" data-name="<?=$custom['pets_name'][0]?>" 
+        <a class="card_item_btn outsideclick" 
+        data-imgs="<?=$imgs?>" 
+        data-name="<?=$custom['pets_name'][0]?>" 
         data-capture-address="<?=$custom['pets_captureaddress'][0]?>"
         data-capture-date="<?=$custom['pets_capturedate'][0]?>"
         data-treatment="<?=$custom['pets_treatment'][0]?>"
         data-sex="<?=$custom['pets_sex'][0]?>"
         data-desc="<?php the_excerpt();?>"
-        data-id="2"><i class="fas fa-paw-alt"></i> Забрать</a>
+        data-id="<?=$post->ID?>"><i class="fas fa-paw-alt"></i> Забрать</a>
       </div>
       
       <?

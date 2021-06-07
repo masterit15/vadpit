@@ -213,6 +213,12 @@ require get_template_directory() . '/inc/dublicatePost.php';
 require get_template_directory() . '/inc/viewPostCounter.php';
 
 /**
+ * custom posts application.
+ */
+require get_template_directory() . '/inc/application.php';
+
+
+/**
  * Load Jetpack compatibility file.
  */
 if ( defined( 'JETPACK__VERSION' ) ) {

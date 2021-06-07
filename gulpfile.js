@@ -28,7 +28,7 @@ function browsersync() {
 		// 	middleware: bssi({ baseDir: `${basePath}`, ext: '.html' })
 		// },
 		proxy: {
-			target: "http://pitnik.rg/",
+			target: "http://pitnik.rg:8080",
 		},
 		// ghostMode: { clicks: false },
 		notify: false,

@@ -69,16 +69,19 @@ function pets_field_init() {
 		add_meta_box("pets_field", "Дополнительные поля", "pets_field", 'pets', "normal", "low");
 	}
 }
-function admin_style() {
-  wp_enqueue_style('admin-styles', get_template_directory_uri().'/admin.css');
+
+if(!stripos($_SERVER['REQUEST_URI'], 'customize')){
+	function admin_style() {
+		wp_enqueue_style('admin-styles', get_template_directory_uri().'/admin.css');
+	}
+	add_action('admin_enqueue_scripts', 'admin_style');
+	function admin_js() {
+		wp_enqueue_script( 'jquery-script', 'https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js' );
+		wp_enqueue_script( 'admin-script', get_template_directory_uri() . '/admin.js' );
+		
+	}
+	add_action('admin_enqueue_scripts', 'admin_js');
 }
-add_action('admin_enqueue_scripts', 'admin_style');
-function admin_js() {
-  wp_enqueue_script( 'jquery-script', 'https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js' );
-  wp_enqueue_script( 'admin-script', get_template_directory_uri() . '/admin.js' );
-  
-}
-add_action('admin_enqueue_scripts', 'admin_js');
 
 //Дополнительные поля продукта html
 function pets_field() {
@@ -123,20 +126,6 @@ function pets_field() {
 					<select name="sex">
 						<option value="male" selected>Мужской</option>
 						<option value="female">Женский</option>
-					</select>
-				<?}?>
-			</div>
-			<div class="group">
-				<label>Вид питомца:</label>
-				<?if ($custom['pets_sex']) {?>
-					<select name="type">
-						<option value="dog" <?if($custom['pets_type'][0] == "dog"){?>selected<?}?>>Собака</option>
-						<option value="cat" <?if($custom['pets_type'][0] == "cat"){?>selected<?}?>>Кошка</option>
-					</select>
-				<?} else {?>
-					<select name="type">
-						<option value="dog" selected>Собака</option>
-						<option value="cat">Кошка</option>
 					</select>
 				<?}?>
 			</div>
@@ -232,7 +221,6 @@ function save_pets_field() {
 		if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {return $post->ID;}
 		update_post_meta($post->ID, "pets_name", $_POST["name"]);
 		update_post_meta($post->ID, "pets_sex", $_POST["sex"]);
-		update_post_meta($post->ID, "pets_type", $_POST["type"]);
 		update_post_meta($post->ID, "pets_treatment", $_POST["treatment"]);
 		update_post_meta($post->ID, "pets_vaccinated", $_POST["vaccinated"]);
 		update_post_meta($post->ID, "pets_capturedate", $_POST["capturedate"]);

@@ -30,11 +30,7 @@ function misha_filter_function(){
 			);
 		}
 		if($type){
-			$args['meta_query'][] = array(
-				'key' => 'pets_type',
-				'value' => $type,
-				'compare' => '=',
-			);
+			$args['pets-cat'] = $type;
 		}
 		if($dateFrom && !$dateTo){
 			$args['meta_query'][] = array(

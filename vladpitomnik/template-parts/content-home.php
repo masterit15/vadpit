@@ -10,9 +10,8 @@
 ?>
 	<section class="section_offer" id="offer" style="background-image: url(<?=TURI?>/images/dist/bg-offer.jpg);">
 		<div class="offer_text">
-			<h1>Служба помощи, заботы и приюта для животных</h1>
-			<p>В муниципальном приюте содержатся более 150 добрых, ласковых, преданных и всегда веселых потенциальных друзей
-			</p>
+			<h1><?php bloginfo( 'name' ); ?></h1>
+			<p><?php bloginfo( 'description' ); ?></p>
 			<div class="section_nav_link">
 				<a href="/#our_pets" class="btn section_nav_link">Найти друга</a>
 			</div>
@@ -84,82 +83,92 @@
 			<div class="tabs_wrap">
 				<div class="tabs_content active form_parent" data-content="1">
 					<div class="card_list">
-						<div class="card_item" style="background-image: url('<?=TURI?>/images/dist/pexels-dog1.jpg');">
+					<?
+					$args = array(
+						'orderby' => 'date', // we will sort posts by date
+						'post_type' => 'pets',
+						'post_status' => 'publish',
+						'posts_per_page' => 4,
+						'pets-cat' => 'dogs'
+					);
+					$reviews = new WP_Query($args);
+					if ($reviews->have_posts()) {while ($reviews->have_posts()) {$reviews->the_post();
+					$custom = get_post_custom($post->ID);
+					$moreImg = show_thumbnails_list();
+					$moreImg[] = get_the_post_thumbnail_url($post->ID, 'large');
+					if(count(array_unique($moreImg)) > 1){ 
+						$imgs = implode("|", array_unique($moreImg));
+					}else{ 
+						$imgs = get_the_post_thumbnail_url($post->ID, 'large');
+					}
+					?>
+						<div class="card_item" style="background-image: url('<?=get_the_post_thumbnail_url($post->ID, 'large')?>');">
 							<div class="card_item_content">
-								<div class="card_item_title">Батон</div>
-								<div class="card_item_address"><i class="fal fa-map-pin"></i> пос. Заводской ул. Дзусова</div>
-								<div class="card_item_date"><i class="fal fa-clock"></i> 21.02.2021</div>
-								<div class="card_item_desc">Мальчик, 4 месяца. Вылечен.</div>
+								<div class="card_item_title"><?=$custom['pets_name'][0]?></div>
+								<div class="card_item_address"><i class="fal fa-map-pin"></i> <?=$custom['pets_captureaddress'][0]?></div>
+								<div class="card_item_date"><i class="fal fa-clock"></i> <?=$custom['pets_capturedate'][0]?></div>
+								<div class="card_item_desc"><?php the_excerpt();?></div>
 							</div>
-							<a class="card_item_btn outsideclick form_open" data-img="<?=TURI?>/images/dist/pexels-dog1.jpg" data-name="Батон" data-id="1"><i class="fas fa-paw-alt"></i> Забрать</a>
+							<a class="card_item_btn outsideclick form_open"
+								data-img="<?=get_the_post_thumbnail_url($post->ID, 'large')?>" 
+								data-name="<?=$custom['pets_name'][0]?>" 
+								data-capture-address="<?=$custom['pets_captureaddress'][0]?>"
+								data-capture-date="<?=$custom['pets_capturedate'][0]?>"
+								data-treatment="<?=$custom['pets_treatment'][0]?>"
+								data-sex="<?=$custom['pets_sex'][0]?>"
+								data-desc="<?php the_excerpt();?>"
+								data-type="dog"
+								data-id="<?=$post->ID?>"
+							><i class="fas fa-paw-alt"></i> Забрать</a>
 						</div>
-						<div class="card_item" style="background-image: url('<?=TURI?>/images/dist/pexels-dog2.jpg')">
-							<div class="card_item_content">
-								<div class="card_item_title">Батон</div>
-								<div class="card_item_address"><i class="fal fa-map-pin"></i> пос. Заводской ул. Дзусова</div>
-								<div class="card_item_date"><i class="fal fa-clock"></i> 21.02.2021</div>
-								<div class="card_item_desc">Мальчик, 4 месяца. Вылечен.</div>
-							</div>
-							<a class="card_item_btn outsideclick form_open" data-img="<?=TURI?>/images/dist/pexels-dog2.jpg" data-name="Батон" data-id="2"><i class="fas fa-paw-alt"></i> Забрать</a>
-						</div>
-						<div class="card_item" style="background-image: url('<?=TURI?>/images/dist/pexels-dog3.jpg')">
-							<div class="card_item_content">
-								<div class="card_item_title">Батон</div>
-								<div class="card_item_address"><i class="fal fa-map-pin"></i> пос. Заводской ул. Дзусова</div>
-								<div class="card_item_date"><i class="fal fa-clock"></i> 21.02.2021</div>
-								<div class="card_item_desc">Мальчик, 4 месяца. Вылечен.</div>
-							</div>
-							<a class="card_item_btn outsideclick form_open" data-img="<?=TURI?>/images/dist/pexels-dog3.jpg" data-name="Батон" data-id="3"><i class="fas fa-paw-alt"></i> Забрать</a>
-						</div>
-						<div class="card_item" style="background-image: url('<?=TURI?>/images/dist/pexels-dog4.jpg');">
-							<div class="card_item_content">
-								<div class="card_item_title">Батон</div>
-								<div class="card_item_address"><i class="fal fa-map-pin"></i> пос. Заводской ул. Дзусова</div>
-								<div class="card_item_date"><i class="fal fa-clock"></i> 21.02.2021</div>
-								<div class="card_item_desc">Мальчик, 4 месяца. Вылечен.</div>
-							</div>
-							<a class="card_item_btn outsideclick form_open" data-img="<?=TURI?>/images/dist/pexels-dog4.jpg" data-name="Батон" data-id="4"><i class="fas fa-paw-alt"></i> Забрать</a>
-						</div>
+						<?
+						}} else {echo 'Ничего не найдено';}
+						wp_reset_postdata();?>
 					</div>
 				</div>
 				<div class="tabs_content form_parent" data-content="2">
-					<div class="card_list">
-						<div class="card_item" style="background-image: url('<?=TURI?>/images/dist/cat1.jpg');">
+				<div class="card_list">
+					<?
+					$args = array(
+						'orderby' => 'date', // we will sort posts by date
+						'post_type' => 'pets',
+						'post_status' => 'publish',
+						'posts_per_page' => 4,
+						'pets-cat' => 'cats'
+					);
+					$reviews = new WP_Query($args);
+					if ($reviews->have_posts()) {while ($reviews->have_posts()) {$reviews->the_post();
+					$custom = get_post_custom($post->ID);
+					$moreImg = show_thumbnails_list();
+					$moreImg[] = get_the_post_thumbnail_url($post->ID, 'large');
+					if(count(array_unique($moreImg)) > 1){ 
+						$imgs = implode("|", array_unique($moreImg));
+					}else{ 
+						$imgs = get_the_post_thumbnail_url($post->ID, 'large');
+					}
+					?>
+						<div class="card_item" style="background-image: url('<?=get_the_post_thumbnail_url($post->ID, 'large')?>');">
 							<div class="card_item_content">
-								<div class="card_item_title">Батон</div>
-								<div class="card_item_address"><i class="fal fa-map-pin"></i> пос. Заводской ул. Дзусова</div>
-								<div class="card_item_date"><i class="fal fa-clock"></i> 21.02.2021</div>
-								<div class="card_item_desc">Мальчик, 4 месяца. Вылечен.</div>
+								<div class="card_item_title"><?=$custom['pets_name'][0]?></div>
+								<div class="card_item_address"><i class="fal fa-map-pin"></i> <?=$custom['pets_captureaddress'][0]?></div>
+								<div class="card_item_date"><i class="fal fa-clock"></i> <?=$custom['pets_capturedate'][0]?></div>
+								<div class="card_item_desc"><?php the_excerpt();?></div>
 							</div>
-							<a class="card_item_btn outsideclick form_open" data-img="<?=TURI?>/images/dist/cat1.jpg" data-name="Батон" data-id="5"><i class="fas fa-paw-alt"></i> Забрать</a>
+							<a class="card_item_btn outsideclick form_open"
+								data-imgs="<?=$imgs?>" 
+								data-name="<?=$custom['pets_name'][0]?>" 
+								data-capture-address="<?=$custom['pets_captureaddress'][0]?>"
+								data-capture-date="<?=$custom['pets_capturedate'][0]?>"
+								data-treatment="<?=$custom['pets_treatment'][0]?>"
+								data-sex="<?=$custom['pets_sex'][0]?>"
+								data-desc="<?php the_excerpt();?>"
+								data-type="cat"
+								data-id="<?=$post->ID?>"
+							><i class="fas fa-paw-alt"></i> Забрать</a>
 						</div>
-						<div class="card_item" style="background-image: url('<?=TURI?>/images/dist/cat2.jpg');">
-							<div class="card_item_content">
-								<div class="card_item_title">Батон</div>
-								<div class="card_item_address"><i class="fal fa-map-pin"></i> пос. Заводской ул. Дзусова</div>
-								<div class="card_item_date"><i class="fal fa-clock"></i> 21.02.2021</div>
-								<div class="card_item_desc">Мальчик, 4 месяца. Вылечен.</div>
-							</div>
-							<a class="card_item_btn outsideclick form_open" data-img="<?=TURI?>/images/dist/cat2.jpg" data-name="Батон" data-id="6"><i class="fas fa-paw-alt"></i> Забрать</a>
-						</div>
-						<div class="card_item" style="background-image: url('<?=TURI?>/images/dist/cat3.jpg');">
-							<div class="card_item_content">
-								<div class="card_item_title">Батон</div>
-								<div class="card_item_address"><i class="fal fa-map-pin"></i> пос. Заводской ул. Дзусова</div>
-								<div class="card_item_date"><i class="fal fa-clock"></i> 21.02.2021</div>
-								<div class="card_item_desc">Мальчик, 4 месяца. Вылечен.</div>
-							</div>
-							<a class="card_item_btn outsideclick form_open" data-img="<?=TURI?>/images/dist/cat3.jpg" data-name="Батон" data-id="7"><i class="fas fa-paw-alt"></i> Забрать</a>
-						</div>
-						<div class="card_item" style="background-image: url('<?=TURI?>/images/dist/cat4.jpg');">
-							<div class="card_item_content">
-								<div class="card_item_title">Батон</div>
-								<div class="card_item_address"><i class="fal fa-map-pin"></i> пос. Заводской ул. Дзусова</div>
-								<div class="card_item_date"><i class="fal fa-clock"></i> 21.02.2021</div>
-								<div class="card_item_desc">Мальчик, 4 месяца. Вылечен.</div>
-							</div>
-							<a class="card_item_btn outsideclick form_open" data-img="<?=TURI?>/images/dist/cat4.jpg" data-name="Батон" data-id="8"><i class="far fa-paw-alt"></i> Забрать</a>
-						</div>
+						<?
+						}} else {echo 'Ничего не найдено';}
+						wp_reset_postdata();?>
 					</div>
 				</div>
 			</div>
