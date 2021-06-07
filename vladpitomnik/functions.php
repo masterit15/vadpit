@@ -218,7 +218,12 @@ require get_template_directory() . '/inc/viewPostCounter.php';
 if ( defined( 'JETPACK__VERSION' ) ) {
 	require get_template_directory() . '/inc/jetpack.php';
 }
-
+/**
+ * Load Jetpack compatibility file.
+ */
+// if ( defined( 'JETPACK__VERSION' ) ) {
+// 	require get_template_directory() . '/inc/bredcrumbs.php';
+// }
 
 function register_my_session()
 {
@@ -229,3 +234,77 @@ function register_my_session()
 }
 
 add_action('init', 'register_my_session');
+
+
+function true_breadcrumbs(){
+ 
+	// получаем номер текущей страницы
+	$page_num = ( get_query_var( 'paged' ) ) ? get_query_var( 'paged' ) : 1;
+ 
+	$separator = ''; //  разделяем обычным слэшем, но можете чем угодно другим
+ echo '<ul class="breadcrumbs">';
+	// если главная страница сайта
+	if( is_front_page() ){
+ 
+		// if( $page_num > 1 ) {
+		// 	echo '<li class="active"><a href="' . site_url() . '">Главная</a></li>' . $separator . $page_num . '-я страница';
+		// } else {
+		// 	echo 'Вы находитесь на главной странице';
+		// }
+ 
+	} else { // не главная
+		echo '<li class="active"><a href="' . site_url() . '">Главная</a></li>' . $separator;
+		if(stripos($_SERVER['REQUEST_URI'], 'news-page')){
+			echo '<li class="active"><span>Новости</span></li>';
+		}
+		if( is_single() ){ // записи
+
+			echo '<li class="active"><a href="/news-page/">Новости</a></li><li><span>'.get_the_title().'</span></li>';
+ 
+		} elseif ( is_page() ){ // страницы WordPress 
+ 
+			echo '<li><span>'.get_the_title().'</span></li>';
+ 
+		} elseif ( is_category() ) {
+ 
+			echo '<li><span>'.single_cat_title().'</span></li>';
+ 
+		} elseif( is_tag() ) {
+ 
+			echo '<li><span>'.single_tag_title().'</span></li>';
+ 
+		} 
+		// elseif ( is_day() ) { // архивы (по дням)
+ 
+		// 	echo '<a href="' . get_year_link( get_the_time( 'Y' ) ) . '">' . get_the_time( 'Y' ) . '</a>' . $separator;
+		// 	echo '<a href="' . get_month_link( get_the_time( 'Y' ), get_the_time( 'm' ) ) . '">' . get_the_time( 'F' ) . '</a>' . $separator;
+		// 	echo get_the_time('d');
+ 
+		// } elseif ( is_month() ) { // архивы (по месяцам)
+ 
+		// 	echo '<a href="' . get_year_link( get_the_time( 'Y' ) ) . '">' . get_the_time( 'Y' ) . '</a>' . $separator;
+		// 	echo get_the_time('F');
+ 
+		// } elseif ( is_year() ) { // архивы (по годам)
+ 
+		// 	echo get_the_time( 'Y' );
+ 
+		// } elseif ( is_author() ) { // архивы по авторам
+ 
+		// 	global $author;
+		// 	$userdata = get_userdata( $author );
+		// 	echo 'Опубликовал(а) ' . $userdata->display_name;
+ 
+		// } elseif ( is_404() ) { // если страницы не существует
+ 
+		// 	echo 'Ошибка 404';
+ 
+		// }
+ 
+		if ( $page_num > 1 ) { // номер текущей страницы
+			echo '<li><span>' . $page_num . '-я страница</span></li>';
+		}
+ echo '</ul>';
+	}
+ 
+}

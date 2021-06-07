@@ -18,10 +18,7 @@ get_header();
     <?get_sidebar();?>
     <div id="content">
       <h2 class="page_title"><?php single_post_title(); ?></h2>
-      <ul class="breadcrumbs">
-        <li class="active"><a href="/">Главная</a></li>
-        <li><span>Новости</span></li>
-      </ul>
+      <?true_breadcrumbs()?>
       <div id="workarea">
 					<?php
 					while ( have_posts() ) :

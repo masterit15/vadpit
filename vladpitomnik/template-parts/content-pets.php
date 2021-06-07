@@ -10,20 +10,68 @@
 ?>
 <div id="content">
   <h2 class="page_title">Наши питомцы</h2>
-  <ul class="breadcrumbs">
-    <li class="active"><a href="/">Главная</a></li>
-    <li><span>Питомцы</span></li>
-  </ul>
+  <?true_breadcrumbs()?>
+  
+  <div class="loader" data-filter="dog">
+    <img src="<?=TURI?>images/dist/dog.gif" alt="">
+    <img src="<?=TURI?>images/dist/cat.gif" alt="">
+  </div>
   <div id="workarea">
     <div class="card_list_detail form_parent">
       <?
+      $name = $_GET['name'] ? $_GET['name'] : '';
+      $sex = $_GET['sex'] ? $_GET['sex'] : '';
+      $type = $_GET['petsType'] ? $_GET['petsType'] : '';
+      $dateFrom = $_GET['dateFrom'] ? new DateTime($_GET['dateFrom']) : '';
+      $dateTo = $_GET['dateTo'] ? new DateTime($_GET['dateTo']) : '';
+      $dateFrom = date_format($dateFrom, 'Y-m-d');
+      $dateTo = date_format($dateTo, 'Y-m-d');
       $paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
-      $reviews = new WP_Query(
-      array(
-      'post_type' => 'pets',
-      'post_status' => 'publish',
-      'paged' => $paged
-      ));
+      $args = array(
+        'orderby' => 'date', // we will sort posts by date
+        'post_type' => 'pets',
+        'post_status' => 'publish',
+        'paged' => $paged
+      );
+      if($name){
+        $args['meta_query'][] = array(
+          'key' => 'pets_name',
+          'value' => $name,
+          'compare' => 'LIKE',
+        );
+      }
+      if($sex){
+        $args['meta_query'][] = array(
+          'key' => 'pets_sex',
+          'value' => $sex,
+          'compare' => '=',
+        );
+      }
+      if($type){
+        $args['meta_query'][] = array(
+          'key' => 'pets_type',
+          'value' => $type,
+          'compare' => '=',
+        );
+      }
+      if($dateFrom && !$dateTo){
+        $args['meta_query'][] = array(
+          'key' => 'pets_capturedate',
+          'value' => $dateFrom,
+          'compare' => '>=',
+          'type' => 'DATE'
+        );
+      }
+      if($dateFrom && $dateTo){
+        $args['meta_query'][] = array(
+          'key' => 'pets_capturedate',
+          'value' => array($dateFrom, $dateTo),
+          'compare' => 'BETWEEN',
+          'type' => 'DATE'
+        );
+      }
+      $paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
+      $reviews = new WP_Query($args);
       if ($reviews->have_posts()) {while ($reviews->have_posts()) {$reviews->the_post();
       $custom = get_post_custom($post->ID);
       $moreImg = show_thumbnails_list();

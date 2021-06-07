@@ -6,7 +6,11 @@ import Splide from '@splidejs/splide'
 window.jQuery = $
 window.$ = $
 require('air-datepicker')
+window.onload = ()=>{
+    $('.loader').fadeOut(200)
+}
 document.addEventListener('DOMContentLoaded', () => {
+    
     const tl = gsap.timeline()
     let filterParams = {
             name: '',
@@ -47,14 +51,34 @@ document.addEventListener('DOMContentLoaded', () => {
             url: $('#filter').data('url'),
             data: params,
             beforeSend: function() {
-                console.log('ajax beforeSend')
+                $('.loader').attr('data-filter', localStorage.petsType).fadeIn(100)
             },
             success: function(res) {
-                $('.card_list_detail').html(res)
-                console.log('success', res)
+                $('#workarea').html(res)
+                if($('.clear_filter') && $('.clear_filter').length > 0){
+                    $('.clear_filter').remove() 
+                }
+                if($('.card_list_detail').data('filter') == 'y'){
+                    $('#filter').append(`<a href="#!" class="clear_filter"><i class="fas fa-sync-alt"></i> Сбросить</a>`)
+                }
+                // console.log('success', res)
             },
             complete: function() {
-                console.log('ajax complete')
+                $('.clear_filter').on('click', function(){
+                    filterParams.sex = ''
+                    filterParams.name = ''
+                    filterParams.dateTo = ''
+                    filterParams.petsType = ''
+                    filterParams.dateFrom = ''
+                    $('.filter_btn').removeClass('active')
+                    $('.filter_input').val('')
+                    localStorage.removeItem('sex')
+                    localStorage.removeItem('petsType')
+                    setTimeout(()=>{
+                        filterPets(filterParams)
+                    },10)
+                })
+                $('.loader').fadeOut(200)
             },
             error: function(err) {
                 console.error('success', err);
@@ -69,11 +93,28 @@ document.addEventListener('DOMContentLoaded', () => {
             filterProxied.name = ''
         }
     })
+    if(localStorage.sex){
+        let sex = localStorage.getItem('sex')
+        $('.filter_btn').parent().find('.filter_btn').removeClass('active')
+        $(`.filter_btn[data-value="${sex}"]`).addClass('active')
+    }
+    if(localStorage.petsType){
+        let petsType = localStorage.getItem('petsType')
+        $('.filter_btn').parent().find('.filter_btn').removeClass('active')
+        $(`.filter_btn[data-value="${petsType}"]`).addClass('active')
+    }
     $('.filter_btn').on('click', function() {
+        if($(this).hasClass('active')){
+            $(this).removeClass('active')
+            localStorage.removeItem($(this).data('param'))
+            filterProxied[$(this).data('param')] = ''
+        }else{
             $(this).parent().children('button').removeClass('active')
             $(this).addClass('active')
+            localStorage.setItem($(this).data('param'), $(this).data('value'))
             filterProxied[$(this).data('param')] = $(this).data('value')
-        })
+        }
+    })
         // инициализация календаря (фильтра по датам)
     $('.datepicker-here').datepicker({
             range: true,
