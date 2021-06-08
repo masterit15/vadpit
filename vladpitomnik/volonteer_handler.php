@@ -36,7 +36,6 @@ function returnReCaptcha($token) {
 // Проверка, что есть POST запрос
 if ($_POST) {
   $is_valid = returnReCaptcha($_POST['token']);
-  $custom = get_post_custom($feed['pets_id']);
   $res = array(
     'success' => false,
     'message'=> '',
@@ -48,15 +47,13 @@ if ($_POST) {
     $feed = array(
       'name' => $_POST['name'],
       'email' => $_POST['email'],
-      'phone' => $_POST['phone'],
-      'pets_id' => $_POST['pets_id'],
+      'wants_to' => $_POST['wants_to'],
     );
     $postContent =  'Имя: '. $feed['name'] .'<br>'.
-                    'Телефон: ' . $feed['phone'] . '<br>' .
                     'Е-почта: ' . $feed['email'] . '<br>' .
-                    'Выбранный питомец: Имя: ' . $custom['pets_name'][0] . ' Пол: ' . $custom['pets_sex'][0] . ' Иентификатор: '. $feed['pets_id'] .'<br>';
+                    'Хочет: ' . $feed['wants_to'] . '<br>';
 
-    if($feed['name'] and $feed['email'] and $feed['phone']) {
+    if($feed['name'] and $feed['email']) {
       $new_post = array(
       'ID'             => "", // Вы обновляете существующий пост?
       'menu_order'     => "", // Если запись "постоянная страница", установите её порядок в меню.
@@ -72,8 +69,8 @@ if ($_POST) {
       'post_parent'    => "", // ID родительской записи, если нужно.
       'post_password'  => "", // Пароль для просмотра записи.
       'post_status'    => 'publish', // Статус создаваемой записи. 'draft' | 'publish' | 'pending'| 'future' | 'private'
-      'post_title'     => 'Заявка на питомца от: ' . $feed['name'] . ' | Е-почта: ' . $feed['email'] . ' | Телефон: '.$feed['phone'], // Заголовок (название) записи.
-      'post_type'      => 'application_pets',// Тип записи.
+      'post_title'     => 'Заявка на волонтерство от: ' . $feed['name'] . ' | Е-почта: ' . $feed['email'], // Заголовок (название) записи.
+      'post_type'      => 'volunteer',// Тип записи.
       'post_category'  => array(), // Категория к которой относится пост (указываем ярлыки, имена или ID).
       'tags_input'     => array(), // Метки поста (указываем ярлыки, имена или ID).
       // 'tax_input'      => array( 'taxonomy_name' => array() ), // К каким таксам прикрепить запись (указываем ярлыки, имена или ID).

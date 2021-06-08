@@ -40,15 +40,7 @@
 				?>
 			</div>
 			<div class="footer_end">
-				<h3 class="contact_list_title">Адрес</h3>
-				<ul class="contact_list">
-					<li><a href="#"><i class="far fa-map-marker-alt"></i> п. Заводской, ул. Пролетарская, 3</a></li>
-				</ul>
-				<h3 class="contact_list_title">Телефон</h3>
-				<ul class="contact_list">
-					<li><a href="tel:+79188335516">+7 (8672) 20-20-20</a></li>
-					<li><a href="tel:+78672303030">+7 (8672) 30-30-30</a></li>
-				</ul>
+			<?php dynamic_sidebar( 'Контакты-внизу' ); ?>
 			</div>
 		</footer>
 	<?php wp_footer(); ?>

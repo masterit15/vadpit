@@ -70,7 +70,7 @@ function pets_field_init() {
 	}
 }
 
-if(!stripos($_SERVER['REQUEST_URI'], 'customize')){
+if(stripos($_SERVER['REQUEST_URI'], 'action=edit')){
 	function admin_style() {
 		wp_enqueue_style('admin-styles', get_template_directory_uri().'/admin.css');
 	}
@@ -119,13 +119,13 @@ function pets_field() {
 				<label>Пол питомца:</label>
 				<?if ($custom['pets_sex']) {?>
 					<select name="sex">
-						<option value="male" <?if($custom['pets_sex'][0] == "male"){?>selected<?}?>>Мужской</option>
-						<option value="female" <?if($custom['pets_sex'][0] == "female"){?>selected<?}?>>Женский</option>
+						<option value="male" <?if($custom['pets_sex'][0] == "male"){?>selected<?}?>>Самец</option>
+						<option value="female" <?if($custom['pets_sex'][0] == "female"){?>selected<?}?>>Самка</option>
 					</select>
 				<?} else {?>
 					<select name="sex">
-						<option value="male" selected>Мужской</option>
-						<option value="female">Женский</option>
+						<option value="male" selected>Самец</option>
+						<option value="female">Самка</option>
 					</select>
 				<?}?>
 			</div>
@@ -219,13 +219,13 @@ function save_pets_field() {
 	global $post;
 	if ($post) {
 		if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {return $post->ID;}
-		update_post_meta($post->ID, "pets_name", $_POST["name"]);
-		update_post_meta($post->ID, "pets_sex", $_POST["sex"]);
-		update_post_meta($post->ID, "pets_treatment", $_POST["treatment"]);
-		update_post_meta($post->ID, "pets_vaccinated", $_POST["vaccinated"]);
-		update_post_meta($post->ID, "pets_capturedate", $_POST["capturedate"]);
-		update_post_meta($post->ID, "pets_captureaddress", $_POST["captureaddress"]);
-		update_post_meta($post->ID, "_link", $_POST["link"]);
+		update_post_meta($post->ID, "pets_name", isset($_POST["name"]));
+		update_post_meta($post->ID, "pets_sex", isset($_POST["sex"]));
+		update_post_meta($post->ID, "pets_treatment", isset($_POST["treatment"]));
+		update_post_meta($post->ID, "pets_vaccinated", isset($_POST["vaccinated"]));
+		update_post_meta($post->ID, "pets_capturedate", isset($_POST["capturedate"]));
+		update_post_meta($post->ID, "pets_captureaddress", isset($_POST["captureaddress"]));
+		update_post_meta($post->ID, "_link", isset($_POST["link"]));
 	}
 }
 

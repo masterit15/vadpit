@@ -179,41 +179,27 @@
 	<section class="for_volunteers" id="for_volunteers">
 		<h2 class="section_sub_title">Стать волонтером</h2>
 		<div class="volunteer_item_list">
-			<div class="volunteer_item">
-				<img class="volunteer_item_icon" src="<?=TURI?>/images/dist/pat_it.svg"/>
-				<div class="volunteer_item_title">Просто погладить каждую собаку</div>
-				<div class="volunteer_item_desc">Сказать доброе слово каждому питомцу приюта. Выводить собак на выгул в приюте, приучать к поводку и к человеку. Лучше выбрать конкретных животных, которыми Вы будете постоянно заниматься (1-2 раза в неделю).</div>
-				<div class="volunteer_item_action outsideclick">Оставить заявку</div>
-			</div>
-			<div class="volunteer_item">
-				<img class="volunteer_item_icon" src="<?=TURI?>/images/dist/car.svg"/>
-				<div class="volunteer_item_title">Готовы предоставить транспорт</div>
-				<div class="volunteer_item_desc">Тогда Вы можете передать свой номер телефона Антонине (+7 (918) 730-70-30) и помогать с перевозкой животных, сбором отданных вещей и материалов.</div>
-				<div class="volunteer_item_action outsideclick">Оставить заявку</div>
-			</div>
-			<div class="volunteer_item">
-				<img class="volunteer_item_icon" src="<?=TURI?>/images/dist/piar.svg"/>
-				<div class="volunteer_item_title">Пиар</div>
-				<div class="volunteer_item_desc">Вы окажете неоценимую помощь приюту, распространяя объявления по сайтам, в бесплатных газетах, зоомагазинах, ветклиниках. Выбираете понравившееся животное и распространяете про него информацию везде, где возможно, чтобы нашелся добрый хозяин.</div>
-				<div class="volunteer_item_action outsideclick">Оставить заявку</div>
-			</div>
-			<div class="volunteer_item">
-				<img class="volunteer_item_icon" src="<?=TURI?>/images/dist/search_for_hosts.svg"/>
-				<div class="volunteer_item_title">Искать новых хозяев</div>
-				<div class="volunteer_item_desc">Может быть среди Ваших знакомых, родственников, коллег, друзей есть люди, которые хотят завести ласкового пушистого друга?! Приглашайте их к нам на смотрины, рассказывайте о кошках и собаках в приюте. </div>
-				<div class="volunteer_item_action outsideclick">Оставить заявку</div>
-			</div>
-			<div class="volunteer_item">
-				<img class="volunteer_item_icon" src="<?=TURI?>/images/dist/camera.svg"/>
-				<div class="volunteer_item_title">Фотографирование животных</div>
-				<div class="volunteer_item_desc">Как показывает практика, красиво сфотографированных и представленных во всей красе животных пристраивать в добрые руки намного легче, чем по любительским и порой не слишком качественным фотографиям. Мы будем очень рады, если у вас есть возможность иногда проводить фотосъемку наших питомцев.</div>
-				<div class="volunteer_item_action outsideclick">Оставить заявку</div>
-			</div>
-			<div class="volunteer_item">
-				<img class="volunteer_item_icon" src="<?=TURI?>/images/dist/сollecting_things.svg"/>
-				<div class="volunteer_item_title">Сбор вещей и материалов</div>
-				<div class="volunteer_item_desc">Многие люди выкидывают вещи (одеяла, изношенное постельное белье, теплые шарфы, шали и т.д). Все должно быть чистым, выстиранным, хоть и б/у.</div>
-				<div class="volunteer_item_action outsideclick">Оставить заявку</div>
-			</div>
+			<?
+			$args = array(
+				'orderby' => 'id', // we will sort posts by date
+				'order' => 'ASC',
+				'post_type' => 'volunteer_app',
+				'post_status' => 'publish',
+				// 'posts_per_page' => 4,
+				// 'pets-cat' => 'cats'
+			);
+			$reviews = new WP_Query($args);
+			if ($reviews->have_posts()) {
+				while ($reviews->have_posts()) 
+				{$reviews->the_post();
+			?>
+				<div class="volunteer_item">
+					<img class="volunteer_item_icon" src="<?=get_the_post_thumbnail_url($post->ID, 'large')?>"/>
+					<div class="volunteer_item_title"><?= the_title()?></div>
+					<div class="volunteer_item_desc"><?= the_content()?></div>
+					<div class="volunteer_item_action outsideclick" data-title="<?= the_title()?>">Оставить заявку</div>
+				</div>
+			<?}} else {echo 'Ничего не найдено';}
+				wp_reset_postdata();?>
 		</div>
 	</section>

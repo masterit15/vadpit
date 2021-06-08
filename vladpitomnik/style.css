@@ -733,12 +733,12 @@ a:active {
 .sticky {
     display: block;
 }
-
-.post,
-.page {
-    margin: 0 0 1.5em;
+.textwidget{
+    display: flex;
 }
-
+.footer_end .textwidget{
+    display: block;
+}
 .updated:not(.published) {
     display: none;
 }

@@ -21,7 +21,11 @@ get_header();
     <div id="content">
       <h2 class="page_title"><?php single_post_title(); ?></h2>
       <?true_breadcrumbs()?>
-      <div id="workarea">
+      <div class="loader" data-filter="dogs">
+        <img src="<?=TURI?>images/dist/dog.gif" alt="">
+        <img src="<?=TURI?>images/dist/cat.gif" alt="">
+      </div>
+      <div id="workarea" data-action="<?php echo site_url ()?>/wp-admin/admin-ajax.php">
         <div class="news_list_horizontal">
 					<?php
 					if ( have_posts() ) {

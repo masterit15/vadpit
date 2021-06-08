@@ -36,8 +36,7 @@
       <label class="filter_label" >Задайте дату отлова:</label>
       <input type="text"
       value="<?=$_GET['dateFrom'].' - '.$_GET['dateTo']?>"
-      class="filter_input datepicker-here"
-      data-multiple-dates="3"
+      class="filter_input datepicker-here datepicker-filter"
       data-multiple-dates-separator=" - "
       />
     </div>
@@ -53,9 +52,9 @@
 			<?php previous_post_link('<li>%link</li>', 'Предыдущая новость', true); ?>
 			<li><a href="#!" class="datapicker_trigger">Выбрать по дате</a></li>
 		</ul>
-    <div class="datepicker-here"></div>
+    <div class="datepicker-here datepicker-news" data-range="true" data-multiple-dates-separator=" - "></div>
 	<?}elseif(stripos($_SERVER['REQUEST_URI'], 'news-page')){?>
-    <div class="datepicker-here"></div>
+    <div class="datepicker-here datepicker-news" data-range="true" data-multiple-dates-separator=" - "></div>
   <?}?>
 	<?php dynamic_sidebar( 'sidebar-1' ); ?>
 </div>

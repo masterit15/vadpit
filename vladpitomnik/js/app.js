@@ -84,6 +84,37 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
+    // функция для запроса новостей
+    function filterNews(params) {
+        params['action'] = 'newsFilter'
+        $.ajax({
+            type: "POST",
+            url: $('#workarea').data('action'),
+            data: params,
+            beforeSend: function() {
+                $('.loader').attr('data-filter', localStorage.petsType).fadeIn(100)
+            },
+            success: function(res) {
+                $('#workarea').html(res)
+                if($('.clear_filter') && $('.clear_filter').length > 0){
+                    $('.clear_filter').remove() 
+                }
+                if($('.card_list_detail').data('filter') == 'y'){
+                    $('#filter').append(`<a href="#!" class="clear_filter"><i class="fas fa-sync-alt"></i> Сбросить</a>`)
+                }
+                // console.log('success', res)
+            },
+            complete: function() {
+                $('.clear_filter').on('click', function(){
+
+                })
+                $('.loader').fadeOut(200)
+            },
+            error: function(err) {
+                console.error('success', err);
+            }
+        });
+    }
     // фильтрация по имени
     $('.filter_input').on('change', function() {
         if ($(this).val().length > 0) {
@@ -115,7 +146,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     })
         // инициализация календаря (фильтра по датам)
-    $('.datepicker-here').datepicker({
+    $('.datepicker-filter').datepicker({
         range: true,
         position: 'top left',
         onSelect: function(formattedDate, date, inst) {
@@ -129,7 +160,24 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
     })
-    $('.datepicker-here').hide()
+    $('.datepicker-news').datepicker({
+        range: true,
+        multipleDates: true,
+        onSelect: function(formattedDate, date, inst) {
+            let dateFrom = ''
+            let dateTo = ''
+            if (formattedDate.includes(' - ')) {
+                let dateArr = formattedDate.split(' - ')
+                dateFrom = dateArr[0]
+                dateTo = dateArr[1]
+            } else {
+                dateFrom = formattedDate
+                dateTo = ''
+            }
+            filterNews({dateFrom, dateTo})
+        }
+    })
+    // $('.datepicker-here').hide()
     $('.datapicker_trigger').on('click', function(){
         $(this).toggleClass('active')
         if($(this).hasClass('active')){
@@ -246,7 +294,13 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 0)
         initOpenForm()
     })
-
+    function getToken(){
+        grecaptcha.ready(function() {
+            grecaptcha.execute('6LcIQRobAAAAAJTkDMK6jAduINgRvPq-nB3jhKo4', {action: 'homepage'}).then(function(token) {
+                document.querySelector('.token').value = token
+            });
+        });
+    }
     // отображаем форму (забрать питомца)
     function initOpenForm() {
         $('.form_open').on('click', function() {
@@ -285,11 +339,7 @@ document.addEventListener('DOMContentLoaded', () => {
                                 </form>`
             let parent = $('.form_parent')
             $(parent).append(adoptGetForm)
-            grecaptcha.ready(function() {
-                grecaptcha.execute('6LcIQRobAAAAAJTkDMK6jAduINgRvPq-nB3jhKo4', {action: 'homepage'}).then(function(token) {
-                    document.querySelector('.token').value = token
-                });
-            });
+            getToken()
             $('.form_adopt_get .loader').fadeOut(200)
             $('.form_adopt_get_media').css({ 'background-image': `url(${$(this).data('img')})` })
             setTimeout(() => {
@@ -312,6 +362,8 @@ document.addEventListener('DOMContentLoaded', () => {
                         if (res.success) {
                             $('.form_adopt_get .form_wrap').html(res.message)
                         }
+                    },
+                    complete: function () {
                         $('.form_adopt_get .loader').fadeOut(200)
                         $('.close').on('click', function() {
                             $('.form_adopt_get').removeClass('show')
@@ -319,8 +371,6 @@ document.addEventListener('DOMContentLoaded', () => {
                                 $('.form_adopt_get').remove()
                             }, 200)
                         })
-                    },
-                    complete: function () {
                     },
                     error: function (xhr, ajaxOptions, thrownError) {
                         console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
@@ -337,41 +387,65 @@ document.addEventListener('DOMContentLoaded', () => {
         if ($('.form_volunteer') && $('.form_volunteer').length > 0) {
             $('.form_volunteer').remove()
         }
-        let volunteerForm = `<form class="form form_volunteer outsideclick" >
-													<div class="group">
-														<i class="fal fa-user-circle"></i>
-														<input class="input" type="text" name="name" required>
-														<label class="label">Введите имя</label>
-													</div>
-													<div class="group">
-														<i class="fal fa-envelope"></i>
-														<input class="input" type="email" name="email" required>
-														<label class="label">Введите e-mail</label>
-													</div>
-													<button type="submit">Оставить заявку</button>
-												</form>`
+        let volunteerForm = `<form class="form form_volunteer outsideclick" action="/wp-content/themes/vladpitomnik/volonteer_handler.php">
+                                <div class="loader" data-filter="dogs">
+                                    <img src="/wp-content/themes/vladpitomnik/images/dist/dog.gif" alt="">
+                                    <img src="/wp-content/themes/vladpitomnik/images/dist/cat.gif" alt="">
+                                </div>
+                                <div class="form_wrap">
+                                    <div class="group">
+                                        <i class="fal fa-user-circle"></i>
+                                        <input class="input" type="text" name="name" required>
+                                        <label class="label">Введите имя</label>
+                                    </div>
+                                    <div class="group">
+                                        <i class="fal fa-envelope"></i>
+                                        <input class="input" type="email" name="email" required>
+                                        <label class="label">Введите e-mail</label>
+                                    </div>
+                                    <input class="token" type="hidden" name="token"/>
+                                    <input class="input" type="hidden" name="wants_to" value="${$(this).data('title')}"/>
+                                    <button type="submit">Оставить заявку</button>
+                                </div>
+                            </form>`
         let parent = $(this).parent('.volunteer_item').addClass('active')
         $(parent).append(volunteerForm)
+        getToken()
+        $('.form_volunteer .loader').fadeOut(200)
         setTimeout(() => {
             $('.form_volunteer').addClass('show')
         }, 0)
         $('.form_volunteer').on('submit', function(e) {
             e.preventDefault()
             e.stopPropagation()
-            let succesRes = `<div class="group success">
-												<i class="far fa-user-check"></i>
-												<label class="label">Ваша заявка принята. Мы свяжемся с Вами в ближайшее время</label>
-											</div>
-											<button class="close" type="submit">Закрыть</button>
-											`
-            $(this).html(succesRes)
-            $('.close').on('click', function() {
-                $('.form_volunteer').removeClass('show')
-                setTimeout(() => {
-                    $('.form_volunteer').remove()
-                }, 200)
+            $.ajax({
+                url: $(this).attr('action'),
+                type: 'POST',
+                data: new FormData(this),//{name,email,phone,token},
+                contentType: false,
+                cache: false,
+                processData: false,
+                beforeSend: function () {
+                    $('.form_volunteer .loader').fadeIn(200)
+                },
+                success: function (res) {
+                    if (res.success) {
+                        $('.form_volunteer .form_wrap').html(res.message)
+                    }
+                },
+                complete: function () {
+                    $('.form_volunteer .loader').fadeOut(200)
+                    $('.close').on('click', function() {
+                        $('.form_volunteer').removeClass('show')
+                        setTimeout(() => {
+                            $('.form_volunteer').remove()
+                        }, 200)
+                    })
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+                }
             })
-            console.log($(this).serialize());
         })
 
     })

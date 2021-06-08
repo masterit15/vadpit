@@ -49,10 +49,7 @@
 					);
 				?>
 			</nav>
-			<ul class="contact_list">
-				<li><a href="tel:+7(918) 833-55-16"><i class="far fa-phone"></i> +7(918) 833-55-16 </a></li>
-				<li><a href="#"><i class="far fa-map-marker-alt"></i> п. Заводской, ул. Пролетарская, 3</a></li>
-			</ul>
+			<?php dynamic_sidebar( 'Контакты-вверху' ); ?>
 		</div>
 	</header>
 	<div class="wrapper"><!-- begin wrapper -->

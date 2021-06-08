@@ -12,7 +12,7 @@
   <h2 class="page_title">Наши питомцы</h2>
   <?true_breadcrumbs()?>
   
-  <div class="loader" data-filter="dog">
+  <div class="loader" data-filter="dogs">
     <img src="<?=TURI?>images/dist/dog.gif" alt="">
     <img src="<?=TURI?>images/dist/cat.gif" alt="">
   </div>
@@ -94,7 +94,7 @@
         data-capture-address="<?=$custom['pets_captureaddress'][0]?>"
         data-capture-date="<?=$custom['pets_capturedate'][0]?>"
         data-treatment="<?=$custom['pets_treatment'][0]?>"
-        data-sex="<?=$custom['pets_sex'][0]?>"
+        data-sex="<?if($custom['pets_sex'][0] == 'male'){echo 'Самец';}else{ echo 'Самка';}?>"
         data-desc="<?php the_excerpt();?>"
         data-id="<?=$post->ID?>"><i class="fas fa-paw-alt"></i> Забрать</a>
       </div>

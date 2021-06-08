@@ -154,6 +154,28 @@ function vladpitomnik_widgets_init() {
 			'after_title'   => '</h2>',
 		)
 	);
+	register_sidebar(
+		array(
+			'name'          => esc_html__( 'Контакты-вверху', 'vladpitomnik' ),
+			'id'            => 'contactTop',
+			'description'   => esc_html__( 'Добавить виджет.', 'vladpitomnik' ),
+			'before_widget' => '',
+			'after_widget'  => '',
+			'before_title'  => '',
+			'after_title'   => '',
+		)
+	);
+	register_sidebar(
+		array(
+			'name'          => esc_html__( 'Контакты-внизу', 'vladpitomnik' ),
+			'id'            => 'contactBottom',
+			'description'   => esc_html__( 'Добавить виджет.', 'vladpitomnik' ),
+			'before_widget' => '',
+			'after_widget'  => '',
+			'before_title'  => '<h3 class="contact_list_title">',
+			'after_title'   => '</h3>',
+		)
+	);
 }
 add_action( 'widgets_init', 'vladpitomnik_widgets_init' );
 
@@ -194,9 +216,13 @@ require get_template_directory() . '/inc/template-functions.php';
 require get_template_directory() . '/inc/customizer.php';
 
 /**
+ * Pets filter.
+ */
+require get_template_directory() . '/inc/filterPets.php';
+/**
  * Posts filter.
  */
-require get_template_directory() . '/inc/filterPosts.php';
+require get_template_directory() . '/inc/filterPost.php';
 /**
  * custom posts pets.
  */
@@ -216,6 +242,11 @@ require get_template_directory() . '/inc/viewPostCounter.php';
  * custom posts application.
  */
 require get_template_directory() . '/inc/application.php';
+
+/**
+ * custom posts volunteer.
+ */
+require get_template_directory() . '/inc/volunteer.php';
 
 
 /**
