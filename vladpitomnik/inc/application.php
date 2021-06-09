@@ -55,3 +55,10 @@ add_action( 'manage_application_pets_posts_custom_column', function ( $column_na
 	}
 
 } );
+
+add_action( 'admin_menu', function() {
+	global $menu;
+	$posts = get_posts('post_type=application_pets&suppress_filters=0&posts_per_page=-1&post_status=draft');
+	$count = count($posts); 
+	$menu[27][0] = $count > 0 ? 'Заявок <span class="awaiting-mod">' . $count. '</span>' : 'Заявки';
+});

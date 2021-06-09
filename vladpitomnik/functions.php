@@ -157,7 +157,7 @@ function vladpitomnik_widgets_init() {
 	register_sidebar(
 		array(
 			'name'          => esc_html__( 'Контакты-вверху', 'vladpitomnik' ),
-			'id'            => 'contactTop',
+			'id'            => 'contact-top',
 			'description'   => esc_html__( 'Добавить виджет.', 'vladpitomnik' ),
 			'before_widget' => '',
 			'after_widget'  => '',
@@ -168,7 +168,7 @@ function vladpitomnik_widgets_init() {
 	register_sidebar(
 		array(
 			'name'          => esc_html__( 'Контакты-внизу', 'vladpitomnik' ),
-			'id'            => 'contactBottom',
+			'id'            => 'contact-bottom',
 			'description'   => esc_html__( 'Добавить виджет.', 'vladpitomnik' ),
 			'before_widget' => '',
 			'after_widget'  => '',
@@ -299,17 +299,6 @@ if ( defined( 'JETPACK__VERSION' ) ) {
 // if ( defined( 'JETPACK__VERSION' ) ) {
 // 	require get_template_directory() . '/inc/bredcrumbs.php';
 // }
-
-function register_my_session()
-{
-  if( !session_id() )
-  {
-    session_start();
-  }
-}
-
-add_action('init', 'register_my_session');
-
 
 function true_breadcrumbs(){
  

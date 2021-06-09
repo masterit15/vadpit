@@ -129,3 +129,6 @@
 .selected_title {
     border-top: solid 1px #ccc;
 }
+#adminmenu .wp-menu-image img{
+    max-width: 20px;
+}

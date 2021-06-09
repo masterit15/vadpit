@@ -25,6 +25,7 @@ function volunteer() {
 		'rewrite' => true,
 		'capability_type' => 'post',
 		'has_archive' => true,
+		'menu_icon'           => site_url ().'/wp-content/uploads/2021/06/app_icon.png',
 		'rewrite' => array('slug' => 'volunteer', 'with_front' => true),
 		'hierarchical' => false,
 		'menu_position' => null,
@@ -67,3 +68,11 @@ function volunteer_app() {
 		'rest_base' => 'volunteer_app',
 	));
 }
+
+add_action( 'admin_menu', function() {
+	global $menu;
+	$posts = get_posts('post_type=volunteer&suppress_filters=0&posts_per_page=-1&post_status=draft');
+	$count = count($posts); 
+	// PR($menu);
+	$menu[28][0] = $count > 0 ? 'Волонтеров <span class="awaiting-mod">' . $count. '</span>' : 'Волонтеры';
+});

@@ -68,7 +68,7 @@ if ($_POST) {
       'post_name'      => "", // Альтернативное название записи (slug) будет использовано в УРЛе.
       'post_parent'    => "", // ID родительской записи, если нужно.
       'post_password'  => "", // Пароль для просмотра записи.
-      'post_status'    => 'publish', // Статус создаваемой записи. 'draft' | 'publish' | 'pending'| 'future' | 'private'
+      'post_status'    => 'draft', // Статус создаваемой записи. 'draft' | 'publish' | 'pending'| 'future' | 'private'
       'post_title'     => 'Заявка на волонтерство от: ' . $feed['name'] . ' | Е-почта: ' . $feed['email'], // Заголовок (название) записи.
       'post_type'      => 'volunteer',// Тип записи.
       'post_category'  => array(), // Категория к которой относится пост (указываем ярлыки, имена или ID).
