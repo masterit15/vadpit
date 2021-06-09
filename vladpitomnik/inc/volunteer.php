@@ -4,7 +4,7 @@ add_action('init', 'volunteer');
 function volunteer() {
 	register_post_type('volunteer', array(
 		'labels' => array(
-			'name' => 'Волонтероы',
+			'name' => 'Волонтеры',
 			'singular_name' => 'Волонтер',
 			'add_new' => 'Добавить волонтера',
 			'add_new_item' => 'Добавить нового волонтера',
@@ -15,7 +15,7 @@ function volunteer() {
 			'not_found' => 'Волонтеров не найдено',
 			'not_found_in_trash' => 'В корзине волонтеров не найдено',
 			'parent_item_colon' => '',
-			'menu_name' => 'Волонтероы',
+			'menu_name' => 'Волонтеры',
 		),
 		'public' => true,
 		'publicly_queryable' => true,

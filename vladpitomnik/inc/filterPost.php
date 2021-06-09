@@ -3,8 +3,8 @@ add_action('wp_ajax_newsFilter', 'news_filter_function'); // wp_ajax_{ACTION HER
 // add_action('wp_ajax_nopriv_petsFilter', 'misha_filter_function');
  
 function news_filter_function(){
-		$dateFrom = $_POST['dateFrom'] ? $_POST['dateFrom'] : '';
-		$dateTo = $_POST['dateTo'] ? $_POST['dateTo'] : '';
+		$dateFrom = $_POST['dateFrom'] ? date_format(new DateTime($_POST['dateFrom']), 'Y-m-d') : '';
+		$dateTo = $_POST['dateTo'] ? date_format(new DateTime($_POST['dateTo']), 'Y-m-d') : '';
 		$paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
 		$args = array(
 			'orderby' => 'date', // we will sort posts by date
@@ -12,15 +12,21 @@ function news_filter_function(){
 			'paged' => $paged
 		);
 		if($dateFrom && !$dateTo){
+			$date = explode('-', $dateFrom);
 			$args['date_query'] = array(
-				'before' => $dateFrom,
+				array(
+					'year'  => $date[0],
+					'month' => $date[1],
+					'day'   => $date[2],
+				)
 			);
 		}
 		if($dateFrom && $dateTo){
 			$args['date_query'] = array(
-				'before' => $dateFrom,
-				'after' => $dateTo,
+				'before' => $dateTo,
+				'after' => $dateFrom,
 				'inclusive' => true,
+				// 'compare'   => 'BETWEEN'
 			);
 		}
 		?>
@@ -31,6 +37,7 @@ function news_filter_function(){
 			}else{
 				$filter = 'n';
 			}
+			// PR($args);
 			?>
 			<div class="news_list_horizontal" data-filter="<?=$filter?>">
 			<?
@@ -61,7 +68,7 @@ function news_filter_function(){
 						<?php
 						$big = 999999999;
 						echo paginate_links( array(
-								'base' => site_url ().'/news-page/page/%#%?dateFrom='.$dateFrom.'&dateTo='.$dateTo.'',// str_replace( $big, '%#%', get_pagenum_link( $big ) ),
+								'base' => site_url ().'/news-page/page/%#%/?dateFrom='.$dateFrom.'&dateTo='.$dateTo.'',// str_replace( $big, '%#%', get_pagenum_link( $big ) ),
 								'format' => '?paged=%#%',
 								'current' => max( 1, get_query_var('paged') ),
 								'total' => $reviews->max_num_pages,

@@ -308,7 +308,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 $('.form_adopt_get').remove()
             }
             let adoptGetForm = `<form class="form form_adopt_get outsideclick" action="/wp-content/themes/vladpitomnik/handler.php">
-                                    <div class="loader" data-filter="${$(this).data('type')}">
+                                    <div class="loader" data-filter="dogs">
                                         <img src="/wp-content/themes/vladpitomnik/images/dist/dog.gif" alt="">
                                         <img src="/wp-content/themes/vladpitomnik/images/dist/cat.gif" alt="">
                                     </div>

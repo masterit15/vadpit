@@ -70,7 +70,7 @@ function pets_field_init() {
 	}
 }
 
-if(stripos($_SERVER['REQUEST_URI'], 'action=edit')){
+if(stripos($_SERVER['REQUEST_URI'], 'action=edit') || stripos($_SERVER['REQUEST_URI'], 'post_type=pets') and !stripos($_SERVER['REQUEST_URI'], 'edit.php')){
 	function admin_style() {
 		wp_enqueue_style('admin-styles', get_template_directory_uri().'/admin.css');
 	}
@@ -86,7 +86,7 @@ if(stripos($_SERVER['REQUEST_URI'], 'action=edit')){
 //Дополнительные поля продукта html
 function pets_field() {
 	global $post;
-	$custom = get_post_custom($_REQUEST['post']);
+	$custom = get_post_custom($post->ID);
 	$link    = $custom["_link"][0];
 	?>
 	<div class="pets">
@@ -219,16 +219,66 @@ function save_pets_field() {
 	global $post;
 	if ($post) {
 		if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {return $post->ID;}
-		update_post_meta($post->ID, "pets_name", isset($_POST["name"]));
-		update_post_meta($post->ID, "pets_sex", isset($_POST["sex"]));
-		update_post_meta($post->ID, "pets_treatment", isset($_POST["treatment"]));
-		update_post_meta($post->ID, "pets_vaccinated", isset($_POST["vaccinated"]));
-		update_post_meta($post->ID, "pets_capturedate", isset($_POST["capturedate"]));
-		update_post_meta($post->ID, "pets_captureaddress", isset($_POST["captureaddress"]));
-		update_post_meta($post->ID, "_link", isset($_POST["link"]));
+		update_post_meta($post->ID, "pets_name", $_POST["name"]);
+		update_post_meta($post->ID, "pets_sex", $_POST["sex"]);
+		update_post_meta($post->ID, "pets_treatment", $_POST["treatment"]);
+		update_post_meta($post->ID, "pets_vaccinated", $_POST["vaccinated"]);
+		update_post_meta($post->ID, "pets_capturedate", $_POST["capturedate"]);
+		update_post_meta($post->ID, "pets_captureaddress", $_POST["captureaddress"]);
+		update_post_meta($post->ID, "_link", $_POST["link"]);
 	}
 }
 
+// Регистрируем колонку 'ID' и 'Миниатюра'. Обязательно.
+add_filter( 'manage_pets_posts_columns', function ( $columns ) {
+	$my_columns = [
+		'id'    => 'ID',
+		'thumb' => 'Фото питомца',
+		'pets_name' => 'Имя питомца',
+		'pets_sex'=> 'Пол питомца'
+	];
+
+	return array_slice( $columns, 0, 1 ) + $columns + $my_columns ;
+} );
+// Выводим контент для каждой из зарегистрированных нами колонок. Обязательно.
+add_action( 'manage_pets_posts_custom_column', function ( $column_name ) {
+	global $post;
+	$custom = get_post_custom($post->ID);
+
+	if ( $column_name === 'id' ) {
+		the_ID();
+	}
+	if ( $column_name === 'pets_name' ) {
+		echo $custom['pets_name'][0];
+	}
+	if ( $column_name === 'pets_sex' ) {
+		echo $custom['pets_sex'][0] == 'male'? 'Самец' : 'Самка';
+	}
+	if ( $column_name === 'thumb' && has_post_thumbnail() ) {
+		?>
+		<a href="<?php echo get_edit_post_link(); ?>">
+			<?php the_post_thumbnail( 'thumbnail' ); ?>
+		</a>
+		<?php
+	}
+
+} );
+
+// Добавляем стили для зарегистрированных колонок. Необязательно.
+add_action( 'admin_print_footer_scripts-edit.php', function () {
+	?>
+	<style>
+		.column-id {
+			width: 50px;
+		}
+
+		.column-thumb img {
+			max-width: 100%;
+			height: auto;
+		}
+	</style>
+	<?php
+} );
 function show_thumbnails_list() {
 	global $post;
 	$image = get_post_meta($post->ID, '_link', true);

@@ -6,7 +6,7 @@ function misha_filter_function(){
 		$name = $_POST['name'] ? $_POST['name'] : '';
 		$sex = $_POST['sex'] ? $_POST['sex'] : '';
 		$type = $_POST['petsType'] ? $_POST['petsType'] : '';
-		$dateFrom = $_POST['dateTo'] ? date_format(new DateTime($_POST['dateFrom']), 'Y-m-d') : '';
+		$dateFrom = $_POST['dateFrom'] ? date_format(new DateTime($_POST['dateFrom']), 'Y-m-d') : '';
 		$dateTo = $_POST['dateTo'] ? date_format(new DateTime($_POST['dateTo']), 'Y-m-d') : '';
 		$paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
 		$args = array(
@@ -36,7 +36,7 @@ function misha_filter_function(){
 			$args['meta_query'][] = array(
 				'key' => 'pets_capturedate',
 				'value' => $dateFrom,
-				'compare' => '>=',
+				'compare' => '=',
 				'type' => 'DATE'
 			);
 		}
@@ -100,7 +100,7 @@ function misha_filter_function(){
 						<?php
 						$big = 999999999;
 						echo paginate_links( array(
-								'base' => 'http://pitnik.rg/pets-page/page/%#%?name='.$name.'&sex='.$sex.'&type='.$type.'&dateFrom='.$dateFrom.'&dateTo='.$dateTo.'',// str_replace( $big, '%#%', get_pagenum_link( $big ) ),
+								'base' =>  site_url ().'/pets-page/page/%#%/?name='.$name.'&sex='.$sex.'&type='.$type.'&dateFrom='.$dateFrom.'&dateTo='.$dateTo.'',// str_replace( $big, '%#%', get_pagenum_link( $big ) ),
 								'format' => '?paged=%#%',
 								'current' => max( 1, get_query_var('paged') ),
 								'total' => $reviews->max_num_pages,

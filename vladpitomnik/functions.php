@@ -248,7 +248,45 @@ require get_template_directory() . '/inc/application.php';
  */
 require get_template_directory() . '/inc/volunteer.php';
 
+// Регистрируем колонку 'ID' и 'Миниатюра'. Обязательно.
+add_filter( 'manage_post_posts_columns', function ( $columns ) {
+	$my_columns = [
+		'id'    => 'ID',
+		'thumb' => 'Миниатюра',
+	];
 
+	return array_slice( $columns, 0, 1 ) + $my_columns + $columns;
+} );
+// Выводим контент для каждой из зарегистрированных нами колонок. Обязательно.
+add_action( 'manage_post_posts_custom_column', function ( $column_name ) {
+	if ( $column_name === 'id' ) {
+		the_ID();
+	}
+
+	if ( $column_name === 'thumb' && has_post_thumbnail() ) {
+		?>
+		<a href="<?php echo get_edit_post_link(); ?>">
+			<?php the_post_thumbnail( 'thumbnail' ); ?>
+		</a>
+		<?php
+	}
+} );
+
+// Добавляем стили для зарегистрированных колонок. Необязательно.
+add_action( 'admin_print_footer_scripts-edit.php', function () {
+	?>
+	<style>
+		.column-id {
+			width: 50px;
+		}
+
+		.column-thumb img {
+			max-width: 100%;
+			height: auto;
+		}
+	</style>
+	<?php
+} );
 /**
  * Load Jetpack compatibility file.
  */

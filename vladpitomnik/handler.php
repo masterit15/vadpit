@@ -36,7 +36,7 @@ function returnReCaptcha($token) {
 // Проверка, что есть POST запрос
 if ($_POST) {
   $is_valid = returnReCaptcha($_POST['token']);
-  $custom = get_post_custom($feed['pets_id']);
+  $custom = get_post_custom($_POST['pets_id']);
   $res = array(
     'success' => false,
     'message'=> '',
@@ -82,6 +82,8 @@ if ($_POST) {
       );
       $post_id = wp_insert_post($new_post);
       $post = get_post($post_id);
+      update_post_meta($post_id, "email", $feed['email']);
+      update_post_meta($post_id, "phone", $feed['phone']);
       if ( $_FILES ) { 
         $files = $_FILES["more_photos"];  
             foreach ($files['name'] as $key => $value) {            

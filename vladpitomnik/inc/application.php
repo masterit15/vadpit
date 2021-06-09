@@ -33,3 +33,25 @@ function application_pets() {
 		'rest_base' => 'application_pets',
 	));
 }
+// Регистрируем колонку 'ID' и 'Миниатюра'. Обязательно.
+add_filter( 'manage_application_pets_posts_columns', function ( $columns ) {
+	$my_columns = [
+		'email' => 'Е-почта',
+		'phone'=> 'Телефон'
+	];
+
+	return array_slice( $columns, 0, 1 ) + $columns + $my_columns ;
+} );
+// Выводим контент для каждой из зарегистрированных нами колонок. Обязательно.
+add_action( 'manage_application_pets_posts_custom_column', function ( $column_name ) {
+	global $post;
+	$custom = get_post_custom($post->ID);
+
+	if ( $column_name === 'email' ) {
+		echo $custom['email'][0];
+	}
+	if ( $column_name === 'phone' ) {
+		echo $custom['phone'][0];
+	}
+
+} );
