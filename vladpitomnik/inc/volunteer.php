@@ -67,3 +67,9 @@ function volunteer_app() {
 		'rest_base' => 'volunteer_app',
 	));
 }
+add_action( 'admin_menu', function() {
+	global $menu;
+	$count = 541;
+	// PR($menu);
+	$menu[27][0] = 'Заявок <span class="awaiting-mod">' . $count. '</span>';
+});
