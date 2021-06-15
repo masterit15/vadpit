@@ -19,7 +19,7 @@ get_header();
     <div id="content">
       <h2 class="page_title"><?php single_post_title(); ?></h2>
       <?true_breadcrumbs()?>
-      <div id="workarea">
+      <div id="workarea" data-action="<?php echo site_url ()?>/wp-admin/admin-ajax.php">
 					<?php
 					while ( have_posts() ) :
 						the_post();

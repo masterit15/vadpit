@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
             dateFrom: '',
             dateTo: '',
         }
-        // отслеживаем изменения параметров фильтра
+    // отслеживаем изменения параметров фильтра
     let filterProxied = new Proxy(filterParams, {
         get: function(target, prop) {
             // console.log({
@@ -186,7 +186,6 @@ document.addEventListener('DOMContentLoaded', () => {
             $('.datepicker-here').fadeOut(200)
         }
     })
-
         // вычисляем поле датапикера от низа если не хватает то открываем календарь сверху, если хватает то снизу
     let datepicker = $('.datepicker-here').datepicker().data('datepicker')
     if (document.querySelector('.filter_input.datepicker-here')) {
@@ -220,7 +219,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }, 200)
         }
     });
-
     // добавляем активный класс label при взаимодействии с полем ввода
     $('.input').on('input', function() {
         let label = $(this).closest('.group').children('.label');
@@ -230,16 +228,18 @@ document.addEventListener('DOMContentLoaded', () => {
             $(label).removeClass('active')
         }
     })
-
     // определяем что за браузер
     const user = detect.parse(navigator.userAgent);
     if (user.browser.family == 'IE') {
         $('.header').addClass('damn_it_internet_explorer')
         alert('Ваш браузер Internet Explorer, сайт может отображается не коректно, скачайте нормальный браузер!')
     }
-
     // показываем детальную информацию о питомце по клику на него
     $('.card_list_detail .card_item_btn').on('click', function() {
+        if ($('.card_popup') && $('.card_popup').length > 0) {
+            $('.card_popup').remove()
+            $('.form').remove()
+        }
         let cardPopup = `<div class="card_popup outsideclick">
                             <div class="card_popup_carousel">
                                 <div class="splide">
@@ -261,7 +261,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             <div class="card_popup_content">
                                 <h2 class="card_popup_content_title"></h2>
                                 <ul class="card_popup_content_list"></ul>
-                                <a class="card_item_btn form_open" data-img="./images/dist/pexels-dog3.jpg" data-name="Батон" data-id="3">Забрать</a>
+                                <a class="card_item_btn form_open" data-img="" data-name="Батон" data-id="3">Забрать</a>
                             </div>
                         </div>`
         let parent = $('.card_list_detail')
@@ -269,19 +269,22 @@ document.addEventListener('DOMContentLoaded', () => {
         let imgs = []
         if ($(this).data('imgs').includes('|')) {
             imgs = $(this).data('imgs').split('|')
+            $('.form_open').data('img', imgs[0])
             imgs.forEach(img => {
                 $('.card_popup').find('.splide__list').append(`<li class="splide__slide"><div class="card_media" style="background-image: url('${img}');"></div></li>`)
             });
         } else {
             $('.card_popup').find('.splide__list').append(`<li class="splide__slide"><div class="card_media" style="background-image: url('${$(this).data('imgs')}');"></div></li>`)
+            $('.form_open').data('img', $(this).data('imgs'))
         }
+        $('.form_open').data('name', $(this).data('imgs'))
         let listItems = `
-							<li><strong>Место отлова:</strong>${$(this).data('capture-address')}</li>
-							<li><strong>Дата отлова:</strong>${$(this).data('capture-date')}</li>
-							<li><strong>Лечение:</strong>${$(this).data('treatment')}</li>
-							<li><strong>Пол:</strong>${$(this).data('sex')}</li>
-							<li><strong>Описание:</strong>${$(this).data('desc')}</li>
-							`
+                        <li><strong>Место отлова:</strong>${$(this).data('capture-address')}</li>
+                        <li><strong>Дата отлова:</strong>${$(this).data('capture-date')}</li>
+                        <li><strong>Лечение:</strong>${$(this).data('treatment')}</li>
+                        <li><strong>Пол:</strong>${$(this).data('sex')}</li>
+                        <li><strong>Описание:</strong>${$(this).data('desc')}</li>
+                        `
         $('.card_popup_content_title').text($(this).data('name'))
         $('.card_popup_content_list').append(listItems)
         setTimeout(() => {
@@ -449,7 +452,6 @@ document.addEventListener('DOMContentLoaded', () => {
         })
 
     })
-
     // кнопка мобильного меню
     $('#mobnav').on('click', function() {
         $(this).toggleClass('active')
@@ -465,7 +467,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 // }, 100)
         }
     })
-
     // плавный скрол до якоря по клику на ссылку
     $('.section_nav_link a').on('click', function() {
         let elId = $(this).attr('href').split('#')
@@ -473,7 +474,6 @@ document.addEventListener('DOMContentLoaded', () => {
             scrollTop: $(`#${elId[1]}`).offset().top
         }, 800);
     })
-
     // табы
     $('.tabs_action_btn').on('click', function() {
         let items = $('.tabs_content').find('.card_item')
@@ -485,12 +485,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
         let tabContent = $('.tabs_content[data-content="' + index + '"]').addClass('active').fadeIn(200)
         items = $(tabContent).find('.card_item')
-        console.log(items);
-
         tl.set(items, {x: 100, y: 50, opacity: 1}, 1).reverse()
 
     })
-        // анимируем цифры
+    // анимируем цифры
     const numberBlock = document.querySelector(".count");
     var scores = [];
     let numberElement = $('.count_item');
@@ -511,7 +509,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         });
     }
-
     function updateHandler(index) {
         let numberBlock = document.querySelector('.count_item[data-target="' + index + '"] div');
         numberBlock.innerHTML = scores[index].score.toFixed(0);
@@ -525,7 +522,6 @@ document.addEventListener('DOMContentLoaded', () => {
         let text = $(this).data('text')
         share(soc, purl, ptitle, pimg, text)
     })
-
     function share(soc, purl, ptitle, pimg, text) {
         let url = ''
         const Share = {

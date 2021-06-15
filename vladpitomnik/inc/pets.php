@@ -59,12 +59,20 @@ function my_custom_pets() {
 		)
 	);
 }
-
+//Дополнительные поля продукта
+add_action("admin_init", "pets_field_init");
+add_action('save_post', 'save_pets_field');
+function pets_field_init() {
+	$post_types = get_post_types();
+	foreach ($post_types as $post_type) {
+		add_meta_box("pets_field", "Дополнительные поля", "pets_field", 'pets', "normal", "low");
+	}
+}
 function admin_style() {
 	wp_enqueue_style('admin-styles', get_template_directory_uri().'/admin.css');
 }
 add_action('admin_enqueue_scripts', 'admin_style');
-if(stripos($_SERVER['REQUEST_URI'], 'action=edit') || stripos($_SERVER['REQUEST_URI'], 'post_type=pets') and !stripos($_SERVER['REQUEST_URI'], 'edit.php')){
+if(get_post_type() == 'pets'){
 	function admin_js() {
 		wp_enqueue_script( 'jquery-script', 'https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js' );
 		wp_enqueue_script( 'admin-script', get_template_directory_uri() . '/admin.js' );
@@ -72,32 +80,23 @@ if(stripos($_SERVER['REQUEST_URI'], 'action=edit') || stripos($_SERVER['REQUEST_
 	}
 	add_action('admin_enqueue_scripts', 'admin_js');
 
-	//Дополнительные поля продукта
-	add_action("admin_init", "pets_field_init");
-	add_action('save_post', 'save_pets_field');
-	function pets_field_init() {
-		$post_types = get_post_types();
-		foreach ($post_types as $post_type) {
-			add_meta_box("pets_field", "Дополнительные поля", "pets_field", 'pets', "normal", "low");
-		}
-	}
-
-	// Функция сохранения полей продукта "Цена" и "Тираж"
-	function save_pets_field() {
-		global $post;
-		if ($post) {
-			if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {return $post->ID;}
-			update_post_meta($post->ID, "pets_name", $_POST["name"]);
-			update_post_meta($post->ID, "pets_sex", $_POST["sex"]);
-			update_post_meta($post->ID, "pets_treatment", $_POST["treatment"]);
-			update_post_meta($post->ID, "pets_vaccinated", $_POST["vaccinated"]);
-			update_post_meta($post->ID, "pets_capturedate", $_POST["capturedate"]);
-			update_post_meta($post->ID, "pets_captureaddress", $_POST["captureaddress"]);
-			update_post_meta($post->ID, "_link", $_POST["link"]);
-		}
-	}
 }
 
+
+// Функция сохранения полей продукта "Цена" и "Тираж"
+function save_pets_field() {
+	global $post;
+	if ($post) {
+		if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {return $post->ID;}
+		update_post_meta($post->ID, "pets_name", $_POST["name"]);
+		update_post_meta($post->ID, "pets_sex", $_POST["sex"]);
+		update_post_meta($post->ID, "pets_treatment", $_POST["treatment"]);
+		update_post_meta($post->ID, "pets_vaccinated", $_POST["vaccinated"]);
+		update_post_meta($post->ID, "pets_capturedate", $_POST["capturedate"]);
+		update_post_meta($post->ID, "pets_captureaddress", $_POST["captureaddress"]);
+		update_post_meta($post->ID, "_link", $_POST["link"]);
+	}
+}
 //Дополнительные поля продукта html
 function pets_field() {
 	global $post;

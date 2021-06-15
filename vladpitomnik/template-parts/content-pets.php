@@ -89,6 +89,7 @@
         </div>
         <?php show_thumbnails_list(); ?>
         <a class="card_item_btn outsideclick" 
+        data-img="<?=get_the_post_thumbnail_url($post->ID, 'large')?>"
         data-imgs="<?=$imgs?>" 
         data-name="<?=$custom['pets_name'][0]?>" 
         data-capture-address="<?=$custom['pets_captureaddress'][0]?>"

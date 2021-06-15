@@ -12,6 +12,8 @@
 /* Средние устройства, Настольные компьютеры */
 @media only screen and (max-width : 992px)
 	/**/
+	section
+		padding: 20px
 	nav.top_nav
 		ul
 			flex-direction: column
@@ -29,8 +31,13 @@
 				font-size: 24px
 			.section_nav_link
 				max-width: 100%
-	.card_list
-		overflow-x: scroll
+	.tabs_content
+		overflow-y: scroll
+	.card
+		&_list
+			min-width: 1520px
+		&_item
+			min-width: 333px
 	.count_list
 		flex-direction: column
 		justify-content: center
@@ -115,7 +122,7 @@
 			align-items: center
 	.card
 		&_list
-			flex-direction: column
+			// flex-direction: column
 			&_detail
 				justify-content: center
 	.volunteer

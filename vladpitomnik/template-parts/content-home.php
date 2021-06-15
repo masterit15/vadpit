@@ -37,6 +37,7 @@
       'post_type' => 'post',
       'post_status' => 'publish',
 			'posts_per_page' => 6,
+			'category_name' => 'news'
       ));
       if ($reviews->have_posts()) {while ($reviews->have_posts()) {$reviews->the_post();?>
 			<a href="<?the_permalink()?>" class="news_item">
@@ -53,22 +54,24 @@
 		<div class="count">
 			<h2 class="section_sub_title">Муниципальный приют в цифрах</h2>
 			<div class="count_list">
-				<div class="count_item" data-target="0" data-start="0" data-end="150">
+				<?
+				$reviews = new WP_Query(
+				array(
+				'post_type' => 'post',
+				'post_status' => 'publish',
+				'posts_per_page' => 4,
+				'category_name' => 'count'
+				));
+				$i = 0;
+				if ($reviews->have_posts()) {while ($reviews->have_posts()) {
+					$reviews->the_post();
+					$custom = get_post_custom($post->ID);
+				?>
+				<div class="count_item" data-target="<?=$i?>" data-start="0" data-end="<?=$custom['post_counter'][0]?>">
 					<div class="count_item_num">0</div>
-					<div class="count_item_title">Столько питомцев ждут своих хозяев</div>
+					<div class="count_item_title"><? the_title(); ?></div>
 				</div>
-				<div class="count_item" data-target="1" data-start="0" data-end="999">
-					<div class="count_item_num">0</div>
-					<div class="count_item_title">Питомцев обрели новый дом и семью</div>
-				</div>
-				<div class="count_item" data-target="2" data-start="0" data-end="30">
-					<div class="count_item_num">0</div>
-					<div class="count_item_title">Волонтеров оказывают помощь</div>
-				</div>
-				<div class="count_item" data-target="3" data-start="0" data-end="541">
-					<div class="count_item_num">0</div>
-					<div class="count_item_title">Питомцев было вылечено</div>
-				</div>
+				<?$i++;}} else {echo 'Ничего не найдено';}wp_reset_postdata();?>
 			</div>
 		</div>
 	</section>

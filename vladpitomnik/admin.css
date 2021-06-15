@@ -132,3 +132,12 @@
 #adminmenu .wp-menu-image img{
     max-width: 20px;
 }
+#adminmenu, #adminmenu .wp-submenu, #adminmenuback, #adminmenuwrap{
+    width: 220px;
+}
+#wpcontent, #wpfooter{
+    margin-left: 220px
+}
+#adminmenu .wp-submenu{
+    left: 220px
+}

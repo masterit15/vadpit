@@ -372,3 +372,39 @@ function true_breadcrumbs(){
 	}
  
 }
+//Дополнительные поля продукта
+add_action("admin_init", "post_field_init");
+add_action('save_post', 'save_post_field');
+function post_field_init() {
+	$post_types = get_post_types();
+	foreach ($post_types as $post_type) {
+		add_meta_box("post_field", "Дополнительные поля", "post_field", 'post', "normal", "low");
+	}
+}
+//Дополнительные поля продукта html
+function post_field() {
+	global $post;
+	$custom = get_post_custom($post->ID);
+	// PR($custom);
+	?>
+	<div class="pets">
+		<div class="post_fields">
+			<div class="group">
+				<label>Количество:</label>
+					<?if ($custom['post_counter']) {?>
+						<input class="post_fields_counter" name="counter" type="number" value="<?=$custom['post_counter'][0]?>">
+					<?} else {?>
+						<input class="post_fields_counter" name="counter" type="number">
+					<?}?>
+			</div>
+		</div>
+	</div>
+<?
+}
+function save_post_field() {
+	global $post;
+	if ($post) {
+		if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {return $post->ID;}
+		update_post_meta($post->ID, "post_counter", $_POST["counter"]);
+	}
+}
