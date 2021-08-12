@@ -21,17 +21,17 @@
     <div class="filter_group">
       <label class="filter_label">Выберите пол:</label>
       <div class="filter_action">
-        <button data-param="sex" data-value="male" class="filter_btn"><i class="fas fa-mars"></i></button>
-        <button data-param="sex" data-value="female" class="filter_btn"><i class="fas fa-venus"></i></button>
+        <button data-param="sex" data-value="male" class="filter_btn" title="Самцы"><i class="fas fa-mars"></i></button>
+        <button data-param="sex" data-value="female" class="filter_btn" title="Самки"><i class="fas fa-venus"></i></button>
       </div>
     </div>
-    <div class="filter_group">
+    <!-- <div class="filter_group">
       <label class="filter_label">Выберите питомца:</label>
       <div class="filter_action">
         <button data-param="petsType" data-value="dogs" class="filter_btn"><i class="fas fa-dog"></i></button>
         <button data-param="petsType" data-value="cats" class="filter_btn"><i class="fas fa-cat"></i></button>
       </div>
-    </div>
+    </div> -->
     <div class="filter_group">
       <label class="filter_label" >Задайте дату отлова:</label>
       <input type="text"

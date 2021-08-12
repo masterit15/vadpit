@@ -244,6 +244,10 @@ require get_template_directory() . '/inc/viewPostCounter.php';
 require get_template_directory() . '/inc/application.php';
 
 /**
+ * custom posts application.
+ */
+require get_template_directory() . '/inc/mycustomizer.php';
+/**
  * custom posts volunteer.
  */
 require get_template_directory() . '/inc/volunteer.php';

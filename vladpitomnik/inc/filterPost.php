@@ -1,6 +1,6 @@
 <?
 add_action('wp_ajax_newsFilter', 'news_filter_function'); // wp_ajax_{ACTION HERE} 
-// add_action('wp_ajax_nopriv_petsFilter', 'misha_filter_function');
+add_action('wp_ajax_nopriv_newsFilter', 'news_filter_function');
  
 function news_filter_function(){
 		$dateFrom = $_POST['dateFrom'] ? date_format(new DateTime($_POST['dateFrom']), 'Y-m-d') : '';

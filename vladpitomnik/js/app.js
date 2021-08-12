@@ -60,7 +60,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 if($('.card_list_detail').data('filter') == 'y'){
                     $('#filter').append(`<a href="#!" class="clear_filter"><i class="fas fa-sync-alt"></i> Сбросить</a>`)
                 }
-                // console.log('success', res)
+                initCardAction()
             },
             complete: function() {
                 $('.clear_filter').on('click', function(){
@@ -76,6 +76,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     setTimeout(()=>{
                         filterPets(filterParams)
                     },10)
+                    
                 })
                 $('.loader').fadeOut(200)
             },
@@ -115,6 +116,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
+    
     // фильтрация по имени
     $('.filter_input').on('change', function() {
         if ($(this).val().length > 0) {
@@ -235,68 +237,71 @@ document.addEventListener('DOMContentLoaded', () => {
         alert('Ваш браузер Internet Explorer, сайт может отображается не коректно, скачайте нормальный браузер!')
     }
     // показываем детальную информацию о питомце по клику на него
-    $('.card_list_detail .card_item_btn').on('click', function() {
-        if ($('.card_popup') && $('.card_popup').length > 0) {
-            $('.card_popup').remove()
-            $('.form').remove()
-        }
-        let cardPopup = `<div class="card_popup outsideclick">
-                            <div class="card_popup_carousel">
-                                <div class="splide">
-                                    <div class="splide__arrows">
-                                        <button class="splide__arrow splide__arrow--prev">
-                                            <i class="far fa-chevron-left"></i>
-                                        </button>
-                                        <button class="splide__arrow splide__arrow--next">
-                                            <i class="far fa-chevron-right"></i>
-                                        </button>
-                                    </div>
-                                    <div class="splide__track">
-                                        <ul class="splide__list">
-                                            
-                                        </ul>
+    function initCardAction(){
+        $('.card_list_detail .card_item_btn').on('click', function() {
+            if ($('.card_popup') && $('.card_popup').length > 0) {
+                $('.card_popup').remove()
+                $('.form').remove()
+            }
+            let cardPopup = `<div class="card_popup outsideclick">
+                                <div class="card_popup_carousel">
+                                    <div class="splide">
+                                        <div class="splide__arrows">
+                                            <button class="splide__arrow splide__arrow--prev">
+                                                <i class="far fa-chevron-left"></i>
+                                            </button>
+                                            <button class="splide__arrow splide__arrow--next">
+                                                <i class="far fa-chevron-right"></i>
+                                            </button>
+                                        </div>
+                                        <div class="splide__track">
+                                            <ul class="splide__list">
+                                                
+                                            </ul>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="card_popup_content">
-                                <h2 class="card_popup_content_title"></h2>
-                                <ul class="card_popup_content_list"></ul>
-                                <a class="card_item_btn form_open" data-img="" data-name="Батон" data-id="3">Забрать</a>
-                            </div>
-                        </div>`
-        let parent = $('.card_list_detail')
-        $(parent).append(cardPopup)
-        let imgs = []
-        if ($(this).data('imgs').includes('|')) {
-            imgs = $(this).data('imgs').split('|')
-            $('.form_open').data('img', imgs[0])
-            imgs.forEach(img => {
-                $('.card_popup').find('.splide__list').append(`<li class="splide__slide"><div class="card_media" style="background-image: url('${img}');"></div></li>`)
-            });
-        } else {
-            $('.card_popup').find('.splide__list').append(`<li class="splide__slide"><div class="card_media" style="background-image: url('${$(this).data('imgs')}');"></div></li>`)
-            $('.form_open').data('img', $(this).data('imgs'))
-        }
-        $('.form_open').data('name', $(this).data('imgs'))
-        let listItems = `
-                        <li><strong>Место отлова:</strong>${$(this).data('capture-address')}</li>
-                        <li><strong>Дата отлова:</strong>${$(this).data('capture-date')}</li>
-                        <li><strong>Лечение:</strong>${$(this).data('treatment')}</li>
-                        <li><strong>Пол:</strong>${$(this).data('sex')}</li>
-                        <li><strong>Описание:</strong>${$(this).data('desc')}</li>
-                        `
-        $('.card_popup_content_title').text($(this).data('name'))
-        $('.card_popup_content_list').append(listItems)
-        setTimeout(() => {
-            new Splide('.splide', {
-                type: 'fade',
-                rewind: true,
-                pagination: false
-            }).mount();
-            $('.card_popup').addClass('show')
-        }, 0)
-        initOpenForm()
-    })
+                                <div class="card_popup_content">
+                                    <h2 class="card_popup_content_title"></h2>
+                                    <ul class="card_popup_content_list"></ul>
+                                    <a class="card_item_btn form_open" data-img="" data-name="Батон" data-id="3">Забрать</a>
+                                </div>
+                            </div>`
+            let parent = $('.card_list_detail')
+            $(parent).append(cardPopup)
+            let imgs = []
+            if ($(this).data('imgs').includes('|')) {
+                imgs = $(this).data('imgs').split('|')
+                $('.form_open').data('img', imgs[0])
+                imgs.forEach(img => {
+                    $('.card_popup').find('.splide__list').append(`<li class="splide__slide"><div class="card_media" style="background-image: url('${img}');"></div></li>`)
+                });
+            } else {
+                $('.card_popup').find('.splide__list').append(`<li class="splide__slide"><div class="card_media" style="background-image: url('${$(this).data('imgs')}');"></div></li>`)
+                $('.form_open').data('img', $(this).data('imgs'))
+            }
+            $('.form_open').data('name', $(this).data('imgs'))
+            let listItems = `
+                            <li><strong>Место отлова:</strong>${$(this).data('capture-address')}</li>
+                            <li><strong>Дата отлова:</strong>${$(this).data('capture-date')}</li>
+                            <li><strong>Лечение:</strong>${$(this).data('treatment')}</li>
+                            <li><strong>Пол:</strong>${$(this).data('sex')}</li>
+                            <li><strong>Описание:</strong>${$(this).data('desc')}</li>
+                            `
+            $('.card_popup_content_title').text($(this).data('name'))
+            $('.card_popup_content_list').append(listItems)
+            setTimeout(() => {
+                new Splide('.splide', {
+                    type: 'fade',
+                    rewind: true,
+                    pagination: false
+                }).mount();
+                $('.card_popup').addClass('show')
+            }, 0)
+            initOpenForm()
+        })
+    }
+    initCardAction()
     function getToken(){
         grecaptcha.ready(function() {
             grecaptcha.execute('6LcIQRobAAAAAJTkDMK6jAduINgRvPq-nB3jhKo4', {action: 'homepage'}).then(function(token) {
@@ -304,6 +309,24 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
     }
+    function phoneFormat(){
+        var phone = $('a[data-phone]')
+        var lenPhone = $(phone).data('phone').length;
+        var tt = $(phone).data('phone').split('');
+        if(lenPhone == 12){
+            tt.splice(2,"", " (");
+            tt.splice(6,"", ") ");
+            tt.splice(10,"", "-");
+            tt.splice(13,"", "-");
+        }else if(lenPhone == 13){
+            tt.splice(3,"", " (");
+            tt.splice(7,"", ") ");
+            tt.splice(11,"", "-");
+            tt.splice(14,"", "-");
+        }
+        $(phone).html(`<i class="far fa-phone"></i> ${tt.join('')}`)
+    }
+    phoneFormat()
     // отображаем форму (забрать питомца)
     function initOpenForm() {
         $('.form_open').on('click', function() {
@@ -316,7 +339,7 @@ document.addEventListener('DOMContentLoaded', () => {
                                         <img src="/wp-content/themes/vladpitomnik/images/dist/cat.gif" alt="">
                                     </div>
                                     <div class="form_wrap">
-                                        <div class="form_adopt_get_media" style="background-image: url(./images/dist/pexels-dog2.jpg);"></div>
+                                        <div class="form_adopt_get_media" style="background-image: url(/wp-content/themes/vladpitomnik/images/dist/pexels-dog2.jpg);"></div>
                                             <div class="form_adopt_get_fields">
                                                 <h2 class="form_adopt_get_title">Забрать питомца</h2>
                                             <div class="group">

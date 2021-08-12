@@ -49,7 +49,12 @@
 					);
 				?>
 			</nav>
-			<?php dynamic_sidebar( 'Контакты-вверху' ); ?>
+			<div class="textwidget custom-html-widget">
+				<ul class="contact_list">
+					<li><a data-phone="<?=get_theme_mod('phone_1')?>" href="tel:<?=get_theme_mod('phone_1')?>"> <?=get_theme_mod('phone_1')?></a></li>
+					<li><a href="#"><i class="far fa-map-marker-alt"></i> <?=get_theme_mod('address')?></a></li>
+				</ul>
+			</div>
 		</div>
 	</header>
 	<div class="wrapper"><!-- begin wrapper -->

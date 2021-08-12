@@ -1,6 +1,6 @@
 <?
 add_action('wp_ajax_petsFilter', 'misha_filter_function'); // wp_ajax_{ACTION HERE} 
-// add_action('wp_ajax_nopriv_petsFilter', 'misha_filter_function');
+add_action('wp_ajax_nopriv_petsFilter', 'misha_filter_function');
  
 function misha_filter_function(){
 		$name = $_POST['name'] ? $_POST['name'] : '';

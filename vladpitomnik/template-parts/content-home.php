@@ -79,10 +79,10 @@
 	<section class="section_our_pets" id="our_pets">
 		<h2 class="section_sub_title">Наши питомцы</h2>
 		<div class="tabs">
-			<div class="tabs_action">
+			<!-- <div class="tabs_action">
 				<button class="tabs_action_btn active" data-item="1"><i class="fas fa-dog"></i> Собаки</button>
 				<button class="tabs_action_btn" data-item="2">Кошки <i class="fas fa-cat"></i></button>
-			</div>
+			</div> -->
 			<div class="tabs_wrap">
 				<div class="tabs_content active form_parent" data-content="1">
 					<div class="card_list">

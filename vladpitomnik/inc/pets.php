@@ -173,9 +173,7 @@ function pets_field() {
 			</div>
 		</div>
 		<div class="pets_images">
-			<div class="frame">
-
-			</div>
+			<div class="frame"></div>
 			<input type="hidden" name="link" class="field" value="<?=$link?>" />
 			<div class="images_edition">
 				<div class="load_more" 

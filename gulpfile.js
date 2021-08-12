@@ -28,7 +28,7 @@ function browsersync() {
 		// 	middleware: bssi({ baseDir: `${basePath}`, ext: '.html' })
 		// },
 		proxy: {
-			target: "http://pitnik.rg:8080",
+			target: "http://pitnik.rg",
 		},
 		// ghostMode: { clicks: false },
 		notify: false,
@@ -64,7 +64,7 @@ function scripts() {
 }
 
 function styles() {
-	return src([`${basePath}styles/${preprocessor}/*.*`, `!${basePath}styles/${preprocessor}/_*.*`])
+	return src([`${basePath}${preprocessor}/*.*`, `!${basePath}${preprocessor}/_*.*`])
 		.pipe(eval(`${preprocessor}glob`)())
 		.pipe(eval(preprocessor)())
 		.pipe(autoprefixer({ overrideBrowserslist: ['last 10 versions'], grid: true }))
@@ -119,7 +119,7 @@ function deploy() {
 }
 
 function startwatch() {
-	watch(`${basePath}styles/${preprocessor}/**/*`, { usePolling: true }, styles)
+	watch(`${basePath}${preprocessor}/**/*`, { usePolling: true }, styles)
 	watch([`${basePath}js/**/*.js`, `!${basePath}js/**/*.min.js`], { usePolling: true }, scripts)
 	watch(`${basePath}images/src/**/*.{jpg,jpeg,png,webp,svg,gif}`, { usePolling: true }, images)
 	watch(`${basePath}**/*.{${fileswatch}}`, { usePolling: true }).on('change', browserSync.reload)

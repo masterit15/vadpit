@@ -40,7 +40,19 @@
 				?>
 			</div>
 			<div class="footer_end">
-			<?php dynamic_sidebar( 'Контакты-внизу' ); ?>
+			<h3 class="contact_list_title">Адрес</h3>
+			<div class="textwidget custom-html-widget">
+				<ul class="contact_list">
+					<li><a href="#"><i class="far fa-map-marker-alt"></i> <?=get_theme_mod('address')?></a></li>
+				</ul>
+			</div>
+			<h3 class="contact_list_title">Телефон</h3>
+			<div class="textwidget custom-html-widget">
+				<ul class="contact_list">
+					<li><a data-phone="<?=get_theme_mod('phone_2')?>" href="tel:<?=get_theme_mod('phone_2')?>"> <?=get_theme_mod('phone_2')?></a></li>
+					<li><a data-phone="<?=get_theme_mod('phone_3')?>" href="tel:<?=get_theme_mod('phone_3')?>"> <?=get_theme_mod('phone_3')?></a></li>
+				</ul>
+			</div>
 			</div>
 		</footer>
 	<?php wp_footer(); ?>
